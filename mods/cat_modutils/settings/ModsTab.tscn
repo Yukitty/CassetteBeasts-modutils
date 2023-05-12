@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://ui/battle_theme.tres" type="Theme" id=1]
+[ext_resource path="res://nodes/menus/AutoFocusConnector.gd" type="Script" id=2]
+[ext_resource path="res://nodes/menus/RowFocusIndicator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://nodes/menus/AutoScrollContainer.gd" type="Script" id=4]
+[ext_resource path="res://mods/cat_modutils/settings/ModsTab.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 20
+border_width_right = 20
+border_color = Color( 0.670588, 0.458824, 0.909804, 1 )
+
+[node name="ModsTab" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 5 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+rect_min_size = Vector2( 840, 0 )
+rect_clip_content = true
+size_flags_horizontal = 4
+custom_styles/panel = SubResource( 2 )
+
+[node name="Control" type="Control" parent="PanelContainer"]
+margin_left = 20.0
+margin_right = 820.0
+size_flags_vertical = 0
+
+[node name="RowFocusIndicator" parent="PanelContainer/Control" instance=ExtResource( 3 )]
+container_path = NodePath("../../MarginContainer/ScrollContainer/MarginContainer/VBoxContainer/Inputs")
+hide_when_focus_lost = false
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_right = 820.0
+margin_bottom = 1080.0
+custom_constants/margin_right = 20
+custom_constants/margin_left = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer"]
+margin_left = 20.0
+margin_right = 780.0
+margin_bottom = 1080.0
+scroll_horizontal_enabled = false
+script = ExtResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/ScrollContainer"]
+margin_right = 760.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_top = 20
+custom_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/MarginContainer"]
+margin_top = 20.0
+margin_right = 760.0
+margin_bottom = 1060.0
+
+[node name="Inputs" type="GridContainer" parent="PanelContainer/MarginContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+margin_right = 760.0
+size_flags_horizontal = 3
+custom_constants/vseparation = 16
+custom_constants/hseparation = 16
+columns = 2
+script = ExtResource( 2 )
+preserve_focus_index = true
+focus_on_hover = true
+handle_page_up = false
+handle_page_down = false
