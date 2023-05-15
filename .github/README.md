@@ -1,5 +1,9 @@
 # Mod Utils
 
+This is a support library that provides several high level functions for other mods, to make modding easier, more consistent, and to resolve issues of mods accessing the same resource.
+
+If you're a mod author, you're more than welcome to use Mod Utils in any way that it can help you. [Read the documentation.](wiki)
+
 ## How to download and install
 
 On Windows open `%AppData%\Roaming\CassetteBeasts\` and create a `mods` folder.<br>
