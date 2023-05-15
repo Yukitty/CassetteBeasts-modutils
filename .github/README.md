@@ -2,7 +2,7 @@
 
 This is a support library that provides several high level functions for other mods, to make modding easier, more consistent, and to resolve issues with multiple mods accessing the same resource, such as scenes, translation strings, or class scripts.
 
-If you're a mod author, you're absolutely welcome to use Mod Utils if it can help you in any way.<br>[Read the documentation.](../wiki)
+If you're a mod author, you're absolutely welcome to use Mod Utils if it can help you in any way.<br>[Read the documentation.](../../../wiki)
 
 ## How to download and install
 
