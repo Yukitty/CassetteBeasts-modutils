@@ -14,6 +14,7 @@ var trans_patch: Reference
 var settings: Reference
 var class_patch: Reference
 var cheat_mod: Reference
+var world: Reference
 
 func _init() -> void:
 	# Add translation strings
@@ -26,6 +27,7 @@ func _init() -> void:
 	settings = preload("settings.gd").new(self)
 	class_patch = preload("class_patch.gd").new()
 	cheat_mod = preload("cheat_mod.gd").new(self)
+	world = preload("world.gd").new()
 
 	# Run post_init next frame, to work around init_content oversight in v1.1.2
 	DLC.get_tree().connect("idle_frame", self, "_on_post_init", [], CONNECT_ONESHOT)

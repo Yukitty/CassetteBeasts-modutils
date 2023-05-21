@@ -2,7 +2,7 @@
 
 This is a support library that provides several high level functions for other mods, to make modding easier, more consistent, and to resolve issues with multiple mods accessing the same resource, such as scenes, translation strings, or class scripts.
 
-If you're a mod author, you're absolutely welcome to use Mod Utils if it can help you in any way.<br>[Read the documentation.](../../../wiki)
+If you're a mod author, you're absolutely welcome to use Mod Utils if it can help you in any way.<br>[Read the documentation.](/../../wiki)
 
 ## How to download and install
 
@@ -17,7 +17,9 @@ Please see the [official Cassette Beasts wiki Mod User Guide](https://wiki.casse
 
 ## Legal notice
 
-All original assets, scripts, and edits are released under [MIT license](LICENSE.txt) where applicable.
+“Redkrab” character design and art assets © 2023 by Simon S. is licensed under [CC BY-NC 4.0 ![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc/4.0/)
+
+All other original mod assets, scripts, and edits are published under [MIT license](LICENSE.txt)
 
 [Cassette Beasts](https://www.cassettebeasts.com/) is developed by [Bytten Studio](https://bytten-studio.com/) and published by [Raw Fury](https://rawfury.com/).
 

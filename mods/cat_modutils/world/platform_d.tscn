@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://mods/cat_modutils/world/platform_d.webp" type="Texture" id=1]
+
+[node name="PlatformD" type="Spatial"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.125
+shaded = true
+texture = ExtResource( 1 )

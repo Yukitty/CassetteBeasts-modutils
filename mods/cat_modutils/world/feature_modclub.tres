@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://data/map_metadata/MapFeatureMetadata.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+title = "REGION_NAME_MODUTILS"
+priority = 0
+require_flag = "modutils_modclub_unlocked"
+alt_icon_flag = ""
+warp_target_scene = "res://mods/cat_modutils/world/Station.tscn"
+warp_target_name = "PlatformA"
+warp_target_chunk = Vector2( 0, 0 )
+warp_effect = 1

@@ -2,3 +2,15 @@ key,en
 MOD_CAT_MODUTILS_NAME,Mod Utils
 UI_SETTINGS_MODS,Mods
 CONFIRM_LOAD_SAVE_WITH_CHEAT_MODS1,A cheat mod is currently enabled.
+MAGIKRAB_MODUTILS_INTRO1,"I have news, {player}! The Mer-Line has opened Mod Club Station, with connections to Platform D."
+MAGIKRAB_MENU_OPTION_MODUTILS_PLATFORMD,[color=#ab75e8]Platform D?[/color]
+MAGIKRAB_MODUTILS_PLATFORMD1,"Indeed! Platform D travels the branch realities of New Wirral, along an axis less accessible to three-dimensional guests such as yourself."
+MAGIKRAB_MODUTILS_PLATFORMD2,"Travel through Platform D is serviced by my young apprentice, Redkrab.[pause] Pay his enthusiasm no mind, he's still inexperienced."
+MAGIKRAB_MODUTILS_PLATFORMD3,"I can arrange travel to Mod Club Station, where you may meet Redkrab to learn more."
+MAGIKRAB_TRAVEL_OPTION_MODUTILS,[color=#ab75e8]Mod Club Station[/color]
+REGION_NAME_MODUTILS,Mod Club Station
+MODUTILS_REDKRAB_NAME,Redkrab
+MODUTILS_REDKRAB_WIP1,"Greetings and salutations to you, my fellow adventurers!"
+MODUTILS_REDKRAB_WIP2,"You're a tad early to the festivities, I'm afraid.[pause] The Ver-Line hasn't opened Platform D for service as of yet."
+MODUTILS_REDKRAB_WIP3,"You have my sincerest apologies, friends!"
+MODUTILS_MODCLUB_WIP1,Under construction!

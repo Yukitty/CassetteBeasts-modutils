@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://sprites/monsters/world/magikrab.json" type="PackedScene" id=1]
+[ext_resource path="res://world/npc/NPC.tscn" type="PackedScene" id=2]
+[ext_resource path="res://nodes/actions/values/GetPlayer.gd" type="Script" id=3]
+[ext_resource path="res://nodes/actions/FaceTowardsAction.gd" type="Script" id=4]
+[ext_resource path="res://addons/misc_utils/actions/WaitAction.gd" type="Script" id=5]
+[ext_resource path="res://nodes/actions/Cutscene.gd" type="Script" id=6]
+[ext_resource path="res://nodes/actions/IdleBehavior.gd" type="Script" id=7]
+[ext_resource path="res://nodes/actions/MessageDialogAction.gd" type="Script" id=8]
+[ext_resource path="res://mods/cat_modutils/world/redkrab_portrait.png" type="Texture" id=9]
+[ext_resource path="res://mods/cat_modutils/world/MagikrabSprite.gd" type="Script" id=10]
+
+[node name="Redkrab" instance=ExtResource( 2 )]
+npc_name = "MODUTILS_REDKRAB_NAME"
+pronouns = 0
+
+[node name="Sprite" parent="." index="2"]
+idle = "idle"
+swap_colors = [ Color( 0.458824, 0.686275, 0.980392, 1 ), Color( 0.376471, 0.478431, 0.921569, 1 ), Color( 0.27451, 0.282353, 0.807843, 1 ), Color( 0.2, 0.156863, 0.462745, 1 ), Color( 0.121569, 0.0784314, 0.262745, 1 ) ]
+default_palette = [ Color( 0.458824, 0.686275, 0.980392, 1 ), Color( 0.376471, 0.478431, 0.921569, 1 ), Color( 0.27451, 0.282353, 0.807843, 1 ), Color( 0.2, 0.156863, 0.462745, 1 ), Color( 0.121569, 0.0784314, 0.262745, 1 ) ]
+palette = [ Color( 0.827451, 0.478431, 0.478431, 1 ), Color( 0.72549, 0.243137, 0.243137, 1 ), Color( 0.470588, 0.156863, 0.156863, 1 ), Color( 0.278431, 0.0941176, 0.0941176, 1 ), Color( 0.14902, 0.0509804, 0.0509804, 1 ) ]
+emission_palette = [ Color( 0.454902, 0.282353, 0.898039, 1 ), Color( 0.701961, 0.466667, 0.972549, 1 ), Color( 0.890196, 0.686275, 0.996078, 1 ), Color( 1, 1, 1, 1 ) ]
+emission = Color( 0, 0, 0, 1 )
+wave_amplitude = 0.0
+wave_t_frequency = 5.0
+wave_v_frequency = 0.0
+static_amount = 0.0
+static_offset = 0.0
+static_speed = 0.0
+sparkle = false
+sprite_rotation = Vector3( 0, 0, 0 )
+
+[node name="Sprite" parent="Sprite" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 10 )
+
+[node name="IdleBehavior" type="Node" parent="." index="8"]
+script = ExtResource( 7 )
+
+[node name="FaceTowardsAction" type="Node" parent="IdleBehavior" index="0"]
+script = ExtResource( 4 )
+
+[node name="GetPlayer" type="Node" parent="IdleBehavior/FaceTowardsAction" index="0"]
+script = ExtResource( 3 )
+which = 3
+
+[node name="WaitAction" type="Node" parent="IdleBehavior" index="1"]
+script = ExtResource( 5 )
+base_seconds = 0.5
+
+[node name="InteractionBehavior" type="Node" parent="." index="9"]
+script = ExtResource( 6 )
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_WIP1", "MODUTILS_REDKRAB_WIP2", "MODUTILS_REDKRAB_WIP3" ]
