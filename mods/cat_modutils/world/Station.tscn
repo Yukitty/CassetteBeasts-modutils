@@ -13,13 +13,13 @@
 [ext_resource path="res://sprites/environment/world/platform_a.tscn" type="PackedScene" id=11]
 [ext_resource path="res://world/objects/grass/GrassFlowersParticles.tscn" type="PackedScene" id=12]
 [ext_resource path="res://world/objects/grass/grass_emitter.shader" type="Shader" id=13]
-[ext_resource path="res://mods/cat_modutils/world/platform_d.tscn" type="PackedScene" id=14]
+[ext_resource path="res://mods/cat_modutils/world/scenery/platform_d.tscn" type="PackedScene" id=14]
 [ext_resource path="res://mods/cat_modutils/world/Magikrab.tscn" type="PackedScene" id=15]
 [ext_resource path="res://nodes/actions/PassiveMessageAction.gd" type="Script" id=16]
 [ext_resource path="res://world/objects/wired/door/DoorLargeWide.tscn" type="PackedScene" id=17]
 [ext_resource path="res://world/objects/static_physics/construction_props/construction_beam.tscn" type="PackedScene" id=18]
 [ext_resource path="res://world/objects/static_physics/construction_props/construction_sign_1.tscn" type="PackedScene" id=19]
-[ext_resource path="res://mods/cat_modutils/world/small_bush_1.tscn" type="PackedScene" id=20]
+[ext_resource path="res://mods/cat_modutils/world/scenery/small_bush_1.tscn" type="PackedScene" id=20]
 [ext_resource path="res://world/core/Interaction.tscn" type="PackedScene" id=21]
 [ext_resource path="res://nodes/actions/MessageDialogAction.gd" type="Script" id=22]
 [ext_resource path="res://data/map_metadata/overworld.tres" type="Resource" id=23]
@@ -81,7 +81,7 @@ data = {
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( -13, 6, 0 )
+"_editor_floor_": Vector3( -13, 3, 0 )
 }
 
 [node name="Tracker" type="Spatial" parent="."]
@@ -141,14 +141,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 9.25 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.25, 8, 15 )
 
 [node name="GrassFlowersParticles" parent="Props" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 7, 19 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 6, 19 )
 amount = 49
 visibility_aabb = AABB( -2.25, 0, -2.25, 4.5, 4, 4.5 )
 process_material = SubResource( 9 )
 spacing = 0.6
 
 [node name="GrassFlowersParticles2" parent="Props" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 7, 19 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 6, 19 )
 amount = 49
 visibility_aabb = AABB( -2.25, 0, -2.25, 4.5, 4, 4.5 )
 process_material = SubResource( 10 )
@@ -282,6 +282,8 @@ use_pawn_npc_name = false
 
 [node name="Magikrab" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 8, 3 )
+archangel_flag = "encounter_modutils_verline"
+archangel_dialogue = [ "MAGIKRAB_MODUTILS_PLATFORMB1" ]
 wired_door = NodePath("../PlatformA/DoorLargeWide")
 station_id = "modutils"
 
@@ -312,6 +314,7 @@ use_pawn_npc_name = false
 
 [node name="Redkrab" parent="." instance=ExtResource( 24 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 8, 3 )
+wired_door = NodePath("../PlatformD/DoorLargeWide")
 
 [node name="Ceiling" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 19 )

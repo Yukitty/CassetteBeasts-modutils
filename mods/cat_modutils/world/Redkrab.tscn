@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://sprites/monsters/world/magikrab.json" type="PackedScene" id=1]
 [ext_resource path="res://world/npc/NPC.tscn" type="PackedScene" id=2]
@@ -8,12 +8,30 @@
 [ext_resource path="res://nodes/actions/Cutscene.gd" type="Script" id=6]
 [ext_resource path="res://nodes/actions/IdleBehavior.gd" type="Script" id=7]
 [ext_resource path="res://nodes/actions/MessageDialogAction.gd" type="Script" id=8]
-[ext_resource path="res://mods/cat_modutils/world/redkrab_portrait.png" type="Texture" id=9]
+[ext_resource path="res://mods/cat_modutils/world/ui/redkrab_portrait.png" type="Texture" id=9]
 [ext_resource path="res://mods/cat_modutils/world/MagikrabSprite.gd" type="Script" id=10]
+[ext_resource path="res://nodes/actions/CheckConditionAction.gd" type="Script" id=11]
+[ext_resource path="res://addons/misc_utils/actions/decorators/Repeater.gd" type="Script" id=12]
+[ext_resource path="res://nodes/actions/MenuDialogAction.gd" type="Script" id=13]
+[ext_resource path="res://addons/misc_utils/actions/decorators/Failer.gd" type="Script" id=14]
+[ext_resource path="res://addons/misc_utils/actions/composites/Sequence.gd" type="Script" id=15]
+[ext_resource path="res://mods/cat_modutils/world/ui/TutorialPlatformD1.tscn" type="PackedScene" id=16]
+[ext_resource path="res://nodes/actions/ShowTutorialBoxAction.gd" type="Script" id=17]
+[ext_resource path="res://mods/cat_modutils/world/ui/TutorialPlatformD2.tscn" type="PackedScene" id=18]
+[ext_resource path="res://mods/cat_modutils/world/Redkrab.gd" type="Script" id=19]
+[ext_resource path="res://nodes/actions/WarpAction.gd" type="Script" id=20]
+[ext_resource path="res://addons/misc_utils/actions/decorators/Succeeder.gd" type="Script" id=21]
+[ext_resource path="res://mods/cat_modutils/world/ui/stage_coach.png" type="Texture" id=22]
+[ext_resource path="res://mods/cat_modutils/world/ui/stage_coach.ogg" type="AudioStream" id=23]
+[ext_resource path="res://nodes/actions/SetWireStateAction.gd" type="Script" id=24]
+[ext_resource path="res://nodes/actions/SetFlagAction.gd" type="Script" id=25]
+[ext_resource path="res://nodes/actions/values/NodeRefActionValue.gd" type="Script" id=26]
+[ext_resource path="res://nodes/actions/AdvanceTimeAction.gd" type="Script" id=27]
 
 [node name="Redkrab" instance=ExtResource( 2 )]
-npc_name = "MODUTILS_REDKRAB_NAME"
-pronouns = 0
+script = ExtResource( 19 )
+direction = Vector2( 0, 0 )
+wired_door = NodePath("")
 
 [node name="Sprite" parent="." index="2"]
 idle = "idle"
@@ -51,8 +69,161 @@ base_seconds = 0.5
 [node name="InteractionBehavior" type="Node" parent="." index="9"]
 script = ExtResource( 6 )
 
-[node name="MessageDialogAction" type="Node" parent="InteractionBehavior" index="0"]
+[node name="CheckConditionAction" type="Node" parent="InteractionBehavior" index="0"]
+script = ExtResource( 11 )
+always_succeed = true
+one_time_flag = "met_modutils_redkrab"
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/CheckConditionAction" index="0"]
 script = ExtResource( 8 )
 portrait = ExtResource( 9 )
 title = "MODUTILS_REDKRAB_NAME"
-messages = [ "MODUTILS_REDKRAB_WIP1", "MODUTILS_REDKRAB_WIP2", "MODUTILS_REDKRAB_WIP3" ]
+messages = [ "MODUTILS_REDKRAB_INTRO1", "MODUTILS_REDKRAB_INTRO2", "MODUTILS_REDKRAB_INTRO3" ]
+close_after = false
+
+[node name="ShowTutorialBoxAction" type="Node" parent="InteractionBehavior/CheckConditionAction" index="1"]
+script = ExtResource( 17 )
+title = "MODUTILS_TUTORIAL_PLATFORMD_TITLE"
+tutorials = [ ExtResource( 16 ), ExtResource( 18 ) ]
+
+[node name="Repeater" type="Node" parent="InteractionBehavior" index="1"]
+script = ExtResource( 12 )
+stop_on_success = true
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_MENU" ]
+wait_for_confirm = false
+close_after = false
+
+[node name="MenuDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction" index="0"]
+script = ExtResource( 13 )
+menu_options = [ "MODUTILS_REDKRAB_MENU_OPTION_TRAVEL", "MAGIKRAB_MENU_OPTION_LEAVE", "MODUTILS_REDKRAB_MENU_OPTION_MODCLUB", "MODUTILS_REDKRAB_MENU_OPTION_VERLINE", "MAGIKRAB_MENU_OPTION_MAGIKRAB", "MODUTILS_REDKRAB_MENU_OPTION_NOTHING" ]
+default_option = 5
+
+[node name="Sequence_Travel" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="0"]
+script = ExtResource( 15 )
+
+[node name="CheckConditionAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="0"]
+script = ExtResource( 11 )
+always_succeed = true
+require_blackboard_keys = [ "no_destinations" ]
+
+[node name="Failer" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/CheckConditionAction" index="0"]
+script = ExtResource( 14 )
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/CheckConditionAction/Failer" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_TRAVEL_FAIL1", "MODUTILS_REDKRAB_TRAVEL_FAIL2" ]
+
+[node name="ShowTutorialBoxAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/CheckConditionAction/Failer" index="1"]
+script = ExtResource( 17 )
+title = "MODUTILS_TUTORIAL_PLATFORMD_TITLE"
+tutorials = [ ExtResource( 18 ) ]
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="1"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_TRAVEL1" ]
+wait_for_confirm = false
+close_after = false
+
+[node name="DestinationMenu" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="2"]
+script = ExtResource( 13 )
+
+[node name="MessageDialogAction2" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="3"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_TRAVEL2" ]
+close_after = false
+
+[node name="Succeeder" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="4"]
+script = ExtResource( 21 )
+
+[node name="SetWireStateAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/Succeeder" index="0"]
+script = ExtResource( 24 )
+state = true
+wait_for_animation = false
+
+[node name="NodeRefActionValue" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/Succeeder/SetWireStateAction" index="0"]
+script = ExtResource( 26 )
+__meta__ = {
+"action_tree": true
+}
+kind = 4
+blackboard_key = "travel_door"
+
+[node name="MessageDialogAction3" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="5"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_TRAVEL3" ]
+
+[node name="WarpAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel" index="6"]
+script = ExtResource( 20 )
+transition_kind = 2
+loading_audio = ExtResource( 23 )
+loading_graphic = ExtResource( 22 )
+
+[node name="AdvanceTimeAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/WarpAction" index="0"]
+script = ExtResource( 27 )
+advance_by = 6.0
+
+[node name="Failer_Leave" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="1"]
+script = ExtResource( 14 )
+
+[node name="SetFlagAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Failer_Leave" index="0"]
+script = ExtResource( 25 )
+flag = "modutils_redkrab_asked_leave"
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Failer_Leave" index="1"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_LEAVE1", "MODUTILS_REDKRAB_LEAVE2", "MODUTILS_REDKRAB_LEAVE3", "MODUTILS_REDKRAB_LEAVE4", "MODUTILS_REDKRAB_LEAVE5", "MODUTILS_REDKRAB_LEAVE6" ]
+
+[node name="CheckCondition_ModClub" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="2"]
+script = ExtResource( 11 )
+require_flags = [ "modutils_redkrab_asked_leave" ]
+
+[node name="Failer" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/CheckCondition_ModClub" index="0"]
+script = ExtResource( 14 )
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/CheckCondition_ModClub/Failer" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_MODCLUB1", "MODUTILS_REDKRAB_MODCLUB2", "MODUTILS_REDKRAB_MODCLUB3" ]
+
+[node name="Failer_VerLine" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="3"]
+script = ExtResource( 14 )
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Failer_VerLine" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_VERLINE1", "MODUTILS_REDKRAB_VERLINE2", "MODUTILS_REDKRAB_VERLINE3" ]
+
+[node name="Failer_Magikrab" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="4"]
+script = ExtResource( 14 )
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Failer_Magikrab" index="0"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_MAGIKRAB1", "MODUTILS_REDKRAB_MAGIKRAB2" ]
+
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction" index="5"]
+script = ExtResource( 8 )
+portrait = ExtResource( 9 )
+title = "MODUTILS_REDKRAB_NAME"
+messages = [ "MODUTILS_REDKRAB_NOTHING1" ]
+
+[connection signal="interacted" from="Interaction" to="." method="_on_Interaction_interacted"]
+[connection signal="warping" from="InteractionBehavior/Repeater/MessageDialogAction/MenuDialogAction/Sequence_Travel/WarpAction" to="." method="_on_WarpAction_warping"]

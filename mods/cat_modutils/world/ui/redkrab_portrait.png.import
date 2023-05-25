@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/redkrab_portrait.png-3f118201ce6ae5178d184d46c8836c80.stex"
+path="res://.import/redkrab_portrait.png-51eb1dc97bf39d20fc790a9aacfb3ef1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/cat_modutils/world/redkrab_portrait.png"
-dest_files=[ "res://.import/redkrab_portrait.png-3f118201ce6ae5178d184d46c8836c80.stex" ]
+source_file="res://mods/cat_modutils/world/ui/redkrab_portrait.png"
+dest_files=[ "res://.import/redkrab_portrait.png-51eb1dc97bf39d20fc790a9aacfb3ef1.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=0

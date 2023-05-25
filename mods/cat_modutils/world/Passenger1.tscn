@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://world/npc/HumanNPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://mods/cat_modutils/world/FortuneCookieNPCBehavior.gd" type="Script" id=2]
+[ext_resource path="res://sfx/voices/female_npc_6/female_npc_6_thinking_1.wav" type="AudioStream" id=3]
+[ext_resource path="res://nodes/actions/FaceTowardsAction.gd" type="Script" id=4]
+[ext_resource path="res://nodes/actions/values/GetPlayer.gd" type="Script" id=5]
+[ext_resource path="res://nodes/actions/IsNPCStateAction.gd" type="Script" id=6]
+[ext_resource path="res://addons/misc_utils/actions/decorators/Succeeder.gd" type="Script" id=7]
+
+[node name="Passenger1" instance=ExtResource( 1 )]
+npc_name = "MODUTILS_PASSENGER_NAME"
+pronouns = 1
+sprite_colors = {
+"body_color_1": 11,
+"body_color_2": 8,
+"eye_color": 4,
+"face_accessory_color": 8,
+"favorite_color": 8,
+"hair_accessory_color": 8,
+"hair_color": 11,
+"legs_color": 12,
+"shoe_color": 8,
+"skin_color": 23
+}
+sprite_part_names = {
+"arms": "vest1",
+"body": "vest1",
+"hair": "bow1",
+"head": "glasses_1",
+"legs": "skirt1",
+"wings": "generic"
+}
+human_colors/body_color_1 = 11
+human_colors/body_color_2 = 8
+human_colors/eye_color = 4
+human_colors/face_accessory_color = 8
+human_colors/favorite_color = 8
+human_colors/hair_accessory_color = 8
+human_colors/hair_color = 11
+human_colors/legs_color = 12
+human_colors/shoe_color = 8
+human_colors/skin_color = 23
+
+[node name="HumanSprite" parent="Sprite" index="0"]
+part_names = {
+"arms": "vest1",
+"body": "vest1",
+"hair": "bow1",
+"head": "glasses_1",
+"legs": "skirt1",
+"wings": "generic"
+}
+colors = {
+"body_color_1": 11,
+"body_color_2": 8,
+"eye_color": 4,
+"face_accessory_color": 8,
+"favorite_color": 8,
+"hair_accessory_color": 8,
+"hair_color": 11,
+"legs_color": 12,
+"shoe_color": 8,
+"skin_color": 23
+}
+
+[node name="InteractionBehavior" type="Node" parent="." index="9"]
+script = ExtResource( 2 )
+voice_audio = ExtResource( 3 )
+title = "{pawn}"
+dialogue = [ "MODUTILS_PASSENGER_1_DIALOGUE1", "MODUTILS_PASSENGER_1_DIALOGUE2", "MODUTILS_PASSENGER_1_DIALOGUE3", "MODUTILS_PASSENGER_1_DIALOGUE4", "MODUTILS_PASSENGER_1_DIALOGUE5" ]
+
+[node name="Succeeder" type="Node" parent="InteractionBehavior" index="0"]
+script = ExtResource( 7 )
+
+[node name="IsNPCStateAction" type="Node" parent="InteractionBehavior/Succeeder" index="0"]
+script = ExtResource( 6 )
+state = "Sitting"
+invert = true
+
+[node name="FaceTowardsAction" type="Node" parent="InteractionBehavior/Succeeder/IsNPCStateAction" index="0"]
+script = ExtResource( 4 )
+
+[node name="GetPlayer" type="Node" parent="InteractionBehavior/Succeeder/IsNPCStateAction/FaceTowardsAction" index="0"]
+script = ExtResource( 5 )

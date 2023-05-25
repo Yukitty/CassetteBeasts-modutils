@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/battle_theme.tres" type="Theme" id=1]
+[ext_resource path="res://menus/relationship_up/heart_filled.png" type="Texture" id=2]
+[ext_resource path="res://ui/fonts/regular/regular_36.tres" type="DynamicFont" id=3]
+[ext_resource path="res://nodes/menus/TrgLabel.gd" type="Script" id=4]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+margin_right = 874.0
+margin_bottom = 350.0
+theme = ExtResource( 1 )
+custom_constants/separation = 42
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+margin_right = 250.0
+margin_bottom = 350.0
+rect_min_size = Vector2( 250, 310 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="."]
+margin_right = 874.0
+margin_bottom = 54.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "MODUTILS_TUTORIAL_PLATFORMD1"
+autowrap = true
+script = ExtResource( 4 )

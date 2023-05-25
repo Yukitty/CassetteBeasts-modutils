@@ -5,12 +5,52 @@ CONFIRM_LOAD_SAVE_WITH_CHEAT_MODS1,A cheat mod is currently enabled.
 MAGIKRAB_MODUTILS_INTRO1,"I have news, {player}! The Mer-Line has opened Mod Club Station, with connections to Platform D."
 MAGIKRAB_MENU_OPTION_MODUTILS_PLATFORMD,[color=#ab75e8]Platform D?[/color]
 MAGIKRAB_MODUTILS_PLATFORMD1,"Indeed! Platform D travels the branch realities of New Wirral, along an axis less accessible to three-dimensional guests such as yourself."
-MAGIKRAB_MODUTILS_PLATFORMD2,"Travel through Platform D is serviced by my young apprentice, Redkrab.[pause] Pay his enthusiasm no mind, he's still inexperienced."
+MAGIKRAB_MODUTILS_PLATFORMD2,"Travel through Platform D is serviced by my young apprentice, Redkrab.[pause] Pay his enthusiasm no mind, he’s still inexperienced."
 MAGIKRAB_MODUTILS_PLATFORMD3,"I can arrange travel to Mod Club Station, where you may meet Redkrab to learn more."
+MAGIKRAB_MODUTILS_PLATFORMD2_ALT,We’re already in Mod Club Station. Why not ask Redkrab about it?
 MAGIKRAB_TRAVEL_OPTION_MODUTILS,[color=#ab75e8]Mod Club Station[/color]
+MAGIKRAB_MODUTILS_PLATFORMB1,Platform B is closed for maintenance at this station. It isn’t expected to open again for quite some time.
 REGION_NAME_MODUTILS,Mod Club Station
 MODUTILS_REDKRAB_NAME,Redkrab
-MODUTILS_REDKRAB_WIP1,"Greetings and salutations to you, my fellow adventurers!"
-MODUTILS_REDKRAB_WIP2,"You're a tad early to the festivities, I'm afraid.[pause] The Ver-Line hasn't opened Platform D for service as of yet."
-MODUTILS_REDKRAB_WIP3,"You have my sincerest apologies, friends!"
 MODUTILS_MODCLUB_WIP1,Under construction!
+MODUTILS_PASSENGER_NAME,Passenger
+MODUTILS_PASSENGER_1_DIALOGUE1,Oh? Are you travelling the Ver-Line too?
+MODUTILS_PASSENGER_1_DIALOGUE2,"It’s still dirty down here... But with a little work, Mod Club Station could become quite cozy."
+MODUTILS_PASSENGER_1_DIALOGUE3,Phew![pause] I need a break after that last adventure.
+MODUTILS_PASSENGER_1_DIALOGUE4,Have you seen a snack machine around?
+MODUTILS_PASSENGER_1_DIALOGUE5,What happened to Platform C? Have you used it?
+MODUTILS_REDKRAB_INTRO1,"Salutations to you, my fellow adventurers! Allow me, the indomitable Redkrab, to serve as your fearless guide to locales unknown!"
+MODUTILS_REDKRAB_INTRO2,"The wonderous Vermillion Line, or “Ver-Line” if you would, has chosen me as Her avatar, so that She may show you to [wave amp=30]glorious adventure[/wave]!"
+MODUTILS_REDKRAB_INTRO3,"Please, friends! You need only speak of the adventure you seek, and I shall shepard you swiftly along through Platform D!"
+MODUTILS_TUTORIAL_PLATFORMD_TITLE,Tutorial: The Ver-Line
+MODUTILS_TUTORIAL_PLATFORMD1,"Talk to Redkrab to access new locations provided by installed mods.\n\nPossible destinations may include a dungeon, a town, or even an entire island."
+MODUTILS_TUTORIAL_PLATFORMD2,You must install additional mods to use this feature.\n\nLook for “Platform D” support on ModWorkshop.
+MODUTILS_REDKRAB_MENU,"Speak your mind, adventuring fellows! From whence shall we begin these festivities?"
+MODUTILS_REDKRAB_MENU_OPTION_TRAVEL,I seek adventure!
+MODUTILS_REDKRAB_MENU_OPTION_MODCLUB,Mod Club Station?
+MODUTILS_REDKRAB_MENU_OPTION_VERLINE,The Ver-Line?
+MODUTILS_REDKRAB_MENU_OPTION_MAGIKRAB,Magikrab?
+MODUTILS_REDKRAB_MENU_OPTION_NOTHING,Nevermind.
+MODUTILS_REDKRAB_NOTHING1,"Until we meet again, friends!"
+MODUTILS_REDKRAB_MAGIKRAB1,"Ah yes. My astute young protégé, Magikrab. Surely you’ve met? He is guide to those steaming wagons of the Mer-Line, as it happens."
+MODUTILS_REDKRAB_MAGIKRAB2,"Worry not for his serious tone, he is yet inept in the ways of the [wave amp=30]true adventurer[/wave]!"
+MODUTILS_REDKRAB_TRAVEL1,Where shall we make our heading?
+MODUTILS_REDKRAB_TRAVEL2,"Join me, friends! Our coach awaits!"
+MODUTILS_REDKRAB_TRAVEL3,[wave amp=30]To adventure![/wave]
+MODUTILS_REDKRAB_TRAVEL_FAIL1,"Hmm...[pause] Many apologies, friends. It would seem I have no services to offer you at this time."
+MODUTILS_REDKRAB_TRAVEL_FAIL2,The Ver-Line has yet to be populated with fresh adventures suitably ripe for your party to peruse and plunder.
+MODUTILS_REDKRAB_LEAVE1,"Is that your true and earnest goal? To flee New Wirral completely, and need not return? Then I fear I may be of little aide to you, friends..."
+MODUTILS_REDKRAB_LEAVE2,"You see, the Ver-Line shall quite certainly show you any adventure one could fathom. You may even think yourself free of this land!"
+MODUTILS_REDKRAB_LEAVE3,"Yet always will you be contained within New Wirral, however twisted and distinct as the exotic locales you witness may appear."
+MODUTILS_REDKRAB_LEAVE4,"To travel the Ver-Line is not a transit [i]away[/i] from New Wirral, but simply along a higher plane of it. One known as the realm of modifications."
+MODUTILS_REDKRAB_LEAVE5,"There are few whom touch that realm. Many of those that would, gather here in Mod Club Station to recount their tales."
+MODUTILS_REDKRAB_LEAVE6,"And that, my fine compatriots, is where my services may come in handy! For any adventure I’ve heard, the Ver-Line shall travel!"
+MODUTILS_REDKRAB_MODCLUB1,"Aye, Mod Club Station is the chosen place where the Ver-Line makes Her residence. A humble place fit for the humble beginnings of any adventure."
+MODUTILS_REDKRAB_MODCLUB2,"Here you may meet fresh companions from the higher plane, fellow adventurers such as yourselves, and perhaps even a stall of goods not known elsewhere."
+MODUTILS_REDKRAB_MODCLUB3,"Even should the Ver-Line Herself have naught which piques your interest, surely still you shall find souls abustle in Mod Club Station."
+MODUTILS_REDKRAB_VERLINE1,"Ah, the magnificent Ver-Line. She may not be so large or timely as the transports to which you've grown accustomed, but She's strong and sturdy as can be."
+MODUTILS_REDKRAB_VERLINE2,"Once proper ventures have been established elsewhere, there are few limits to where She will see your travels."
+MODUTILS_REDKRAB_VERLINE3,"Which is to say, please have patience, and fantastic destinations shall make themselves available as exits from the Ver-Line are constructed on the other side."
+UI_PAUSE_MODUTILS_RETURN_BTN,Return to Mod Club Station
+MODUTILS_REDKRAB_RETURN,My fellows! Have you grown weary of this place? Shall we retire to Mod Club Station?
+MODUTILS_REDKRAB_RETURN_NO1,Adventure here as long as you wish! I shall await your triumphant return with baited breath.

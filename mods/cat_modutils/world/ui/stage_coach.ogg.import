@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/stage_coach.ogg-54ea52d2efcdd5fd5c4c1a1ca3a1447d.oggstr"
+
+[deps]
+
+source_file="res://mods/cat_modutils/world/ui/stage_coach.ogg"
+dest_files=[ "res://.import/stage_coach.ogg-54ea52d2efcdd5fd5c4c1a1ca3a1447d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

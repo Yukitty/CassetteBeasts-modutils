@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/platform_d.webp-b0f484743693e5a7ddaac9b5e7c30efa.stex"
+path="res://.import/platform_d.webp-928a53b64eda84620480317ac4711235.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/cat_modutils/world/platform_d.webp"
-dest_files=[ "res://.import/platform_d.webp-b0f484743693e5a7ddaac9b5e7c30efa.stex" ]
+source_file="res://mods/cat_modutils/world/scenery/platform_d.webp"
+dest_files=[ "res://.import/platform_d.webp-928a53b64eda84620480317ac4711235.stex" ]
 
 [params]
 

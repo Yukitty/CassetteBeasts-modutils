@@ -16,9 +16,10 @@ func _populate() -> void:
 
 	# Get the population
 	var lib: Reference = DLC.mods_by_id.cat_modutils.world
-	var population: Array = lib._modclub_population
-	if population == null or population.size() == 0:
-		return
+	var population: Array = lib._modclub_population.duplicate()
+
+	population.append_array(lib._BACKGROUND_PASSENGERS)
+	population.shuffle()
 
 	# Get all the spawn locations
 	var standing_spots: Array = standing.get_children()
@@ -31,9 +32,8 @@ func _populate() -> void:
 	shop_spots.shuffle()
 
 	# Halve the available spawn locations for idle NPCs, to reduce overcrowding
-	# TODO: Enable this after "pages" are implemented
-#	standing_spots.resize(standing_spots.size() >> 1)
-#	bench_spots.resize(bench_spots.size() >> 1)
+	standing_spots.resize(standing_spots.size() >> 1)
+	bench_spots.resize(bench_spots.size() >> 1)
 
 	# Load vanilla market stalls in case they're needed
 	# TODO: Move this and let other mods add custom stalls to the list?
@@ -52,6 +52,10 @@ func _populate() -> void:
 		lib.NPCMode.BENCH,
 	]
 	for def in population:
+		# Some NPCs aren't guaranteed.
+		if "chance" in def and def.chance < 1.0 and def.chance < randf():
+			continue
+
 		mode = def.mode
 
 		# Randomize mode if needed
@@ -69,9 +73,7 @@ func _populate() -> void:
 			lib.NPCMode.BENCH:
 				if bench_spots.empty():
 					break
-				node = _spawn_npc(def.scene)
-				if "default_state_override" in node:
-					node.default_state_override = "Sitting"
+				node = _spawn_npc(def.scene, "Sitting")
 				WarpTarget.warp(bench_spots[0], [node])
 				bench_spots.pop_front()
 
@@ -90,9 +92,11 @@ func _populate() -> void:
 				WarpTarget.warp(shop_spots[0], [node])
 				shop_spots.pop_front()
 
-# Helper for temporary NPC nodes
-func _spawn_npc(scene: PackedScene) -> Spatial:
+# Helper for creating temporary NPC nodes
+func _spawn_npc(scene: PackedScene, default_state_override: String = "") -> Spatial:
 	var node: Spatial = scene.instance()
 	node.add_to_group("dynamic_content")
+	if not default_state_override.empty() and "default_state_override" in node:
+		node.default_state_override = default_state_override
 	owner.add_child(node)
 	return node
