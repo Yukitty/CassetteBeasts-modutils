@@ -9,13 +9,12 @@ const MODUTILS_DEST: Dictionary = {
 func _on_Interaction_interacted(_player) -> void:
 	._on_Interaction_interacted(_player)
 
-	# Open Mod Club Station if populated or dev mode
+	# Open Mod Club Station if populated
 	var lib: Reference = DLC.mods_by_id.cat_modutils.world
-	var modclub_populated: bool = Debug.dev_mode or lib.modclub_populated
-	if modclub_populated:
+	if lib.modclub_populated:
 		behavior.blackboard["modutils_modclub"] = true
 
-	# If Mod Club Station has been discovered, add it to destinations
+	# If Mod Club Station has been discovered previously, add it to destinations
 	if SaveState.has_flag("modutils_modclub_unlocked"):
 		_enable_modutils()
 
@@ -29,6 +28,7 @@ func _enable_modutils() -> void:
 	var set_dest = SetBlackboardValues.new()
 	set_dest.bb_values = MODUTILS_DEST
 	destination_menu.add_child_below_node(destination_menu.get_child(0), set_dest)
+	destination_menu.default_option = destination_menu.menu_options.size() - 1
 
 	# Add Mod Club Station to metadata
 	var lib: Reference = DLC.mods_by_id.cat_modutils.world

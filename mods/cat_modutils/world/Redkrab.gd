@@ -33,16 +33,20 @@ func _on_Interaction_interacted(_player) -> void:
 	# Build current destinations menu
 	var lib: Reference = DLC.mods_by_id.cat_modutils.world
 	for dest in lib._modclub_destinations:
-		var has_flag = dest.flags.empty()
-		for flag in dest.flags:
-			if SaveState.has_flag(flag):
-				has_flag = true
-				break
+		assert("name" in dest)
+		assert("warp_target_scene" in dest)
 
-		if not Debug.dev_mode and not has_flag:
-			continue
 		if SceneManager.current_scene.filename == dest.warp_target_scene:
 			continue
+
+		if "flags" in dest and dest.flags is Array:
+			var has_flag: bool = dest.flags.empty()
+			for flag in dest.flags:
+				if SaveState.has_flag(flag):
+					has_flag = true
+					break
+			if not Debug.dev_mode and not has_flag:
+				continue
 
 		destination_menu.menu_options.push_back(dest.name)
 		var set_dest = SetBlackboardValues.new()

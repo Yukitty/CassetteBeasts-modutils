@@ -21,20 +21,6 @@ const _MODCLUB_BLACKLIST: PoolStringArray = PoolStringArray([
 	"res://world/maps/Overworld.tscn",
 ])
 
-# Default NPC population (flavor text)
-const _BACKGROUND_PASSENGERS = [
-	{
-		"scene": preload("world/Passenger1.tscn"),
-		"mode": NPCMode.ANY_IDLE,
-		"chance": 1/3.0,
-	},
-	{
-		"scene": preload("world/Passenger2.tscn"),
-		"mode": NPCMode.STANDING,
-		"chance": 1/10.0,
-	},
-]
-
 
 ## Public state
 
@@ -51,7 +37,7 @@ var _chunk_init: bool = false
 var _modclub_population: Array
 var _modclub_destinations: Array
 
-func _init() -> void:
+func _init(modutils: ContentInfo) -> void:
 	# Possess Magikrab (sorry! I'll find another way later!)
 	preload("world/Magikrab.tscn").take_over_path("res://world/recurring_npcs/Magikrab.tscn")
 
@@ -59,20 +45,91 @@ func _init() -> void:
 	# I highly recommend your mod do the same, for dungeons.
 	SceneManager.PRESERVABLE_SCENE_BLACKLIST.push_back("res://mods/cat_modutils/")
 
+	# Default NPC population (flavor text)
+	# The flags prevent these NPCs from unlocking Mod Club Station by themselves.
+	_modclub_population = [
+		{
+			"scene": "res://mods/cat_modutils/world/Passenger1.tscn",
+			"mode": "any idle",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/Passenger2.tscn",
+			"mode": "standing",
+			"chance": 1/10.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+	]
+
 	# Add Mod Club Station itself to Mod Club Redkrab's destination menu,
 	# just in case another mod spawns it for some reason.
-	add_modclub_destination(
-		"REGION_NAME_MODUTILS",
-		"res://mods/cat_modutils/world/Station.tscn",
-		"PlatformD"
-	)
+	# The flags prevent this destination from unlocking Mod Club Station by itself.
+	_modclub_destinations = [
+		{
+			"name": "REGION_NAME_MODUTILS",
+			"warp_target_scene": "res://mods/cat_modutils/world/Station.tscn",
+			"warp_target_name": "PlatformD",
+			"flags": ["modutils_modclub_unlocked"],
+		}
+	]
 
-	# Add feature to overworld chunk metadata
-	_init_modclub_chunk_feature()
+	# Add "Mod Club Station" to overworld fast travel map if discovered
+	SaveSystem.connect("file_loaded", self, "_init_modclub_chunk_feature")
 
 	# Add "Return to Mod Club Station" button to menu
 	call_deferred("_init_modclub_return_button")
 	SceneManager.connect("scene_changed", self, "_on_scene_changed")
+
+	# Add post_init processing
+	modutils.connect("post_init", self, "_on_post_init")
+
+
+func _on_post_init() -> void:
+	# Read data from all mods providing a MODUTILS table
+	for mod in DLC.mods:
+		if "MODUTILS" in mod and mod.MODUTILS is Dictionary and "world" in mod.MODUTILS and mod.MODUTILS.world is Dictionary:
+			_init_data(mod.MODUTILS.world)
+
+	# Verify the results are as expected
+	for def in _modclub_population:
+		assert("scene" in def and def.scene is String)
+		assert(not "mode" in def or def.mode is String)
+		assert(not "flags" in def or def.flags is Array)
+		assert(not "chance" in def or (def.chance is float and def.chance > 0.0))
+
+	for def in _modclub_destinations:
+		assert("name" in def and def.name is String)
+		assert("warp_target_scene" in def and def.warp_target_scene is String)
+		assert(not "flags" in def or def.flags is Array)
+
+
+func _init_data(world_defs: Dictionary) -> void:
+	if "modclub_population" in world_defs:
+		assert(world_defs.modclub_population is Array)
+		_modclub_population.append_array(world_defs.modclub_population)
+	if "modclub_destinations" in world_defs:
+		assert(world_defs.modclub_destinations is Array)
+		_modclub_destinations.append_array(world_defs.modclub_destinations)
+
+
+# Tests if Mod Club Station should be accessible.
+func is_modclub_populated() -> bool:
+	if Debug.dev_mode:
+		return true
+	for def in _modclub_population:
+		if not "flags" in def:
+			return true
+		for flag in def.flags:
+			if SaveState.has_flag(flag):
+				return true
+	for def in _modclub_destinations:
+		if not "flags" in def:
+			return true
+		for flag in def.flags:
+			if SaveState.has_flag(flag):
+				return true
+	return false
 
 # Adds fast travel waypoint to an overworld chunk for Mod Club Station
 func _init_modclub_chunk_feature() -> void:
@@ -96,16 +153,7 @@ func _on_scene_changed() -> void:
 		modclub_return_button_active = false
 
 
-# Should return true if ANY Mod Club Station features
-# have been utilized by other mods.
-func is_modclub_populated() -> bool:
-	if not _modclub_population.empty():
-		return true
-	if _modclub_destinations.size() > 1:
-		return true
-	return false
-
-
+# DEPRECIATED: Prefer static data tables as documented on the Mod Utils wiki instead.
 # Call this with your NPC scene to add it to Mod Club Station
 # mode should be one of NPCMode
 func add_modclub_npc(scene: PackedScene, mode: int = NPCMode.ANY_IDLE, flags: Array = [], chance: float = 1.0) -> void:
@@ -113,16 +161,17 @@ func add_modclub_npc(scene: PackedScene, mode: int = NPCMode.ANY_IDLE, flags: Ar
 #	assert(NPCMode.values().has(mode)) # Use a valid enum!
 	assert(chance > 0.0) # Integer division safeguard, lol
 	_modclub_population.push_back({
-		"scene": scene,
+		"scene": scene.resource_path,
 		"mode": mode,
 		"flags": flags,
 		"chance": chance,
 	})
 
 
+# DEPRECIATED: Prefer static data tables as documented on the Mod Utils wiki instead.
 # Call this with your world scene to add it to Mod Club Station's
 # list of "adventure" destinations
-func add_modclub_destination(name: String, warp_target_scene: String, warp_target_name: String = "PlatformD", warp_target_chunk: Vector2 = Vector2.ZERO, flags: Array = []) -> void:
+func add_modclub_destination(name: String, warp_target_scene: String, warp_target_name: String = "Start", warp_target_chunk: Vector2 = Vector2.ZERO, flags: Array = []) -> void:
 	assert(name != null and not name.empty())
 	assert(warp_target_scene != null and not warp_target_scene.empty())
 	_modclub_destinations.push_back({
@@ -162,6 +211,7 @@ func _on_ReturnToModClub_pressed(menu: Control) -> void:
 		"res://mods/cat_modutils/world/Station.tscn",
 		Vector2(0, 0),
 		"PlatformD")
+
 
 func _set_modclub_return_button_active(value: bool) -> void:
 	modclub_return_button_active = is_modclub_populated() and value

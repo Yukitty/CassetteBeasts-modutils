@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://sprites/monsters/world/magikrab.json" type="PackedScene" id=1]
 [ext_resource path="res://world/npc/NPC.tscn" type="PackedScene" id=2]
@@ -9,11 +9,10 @@
 [ext_resource path="res://nodes/actions/IdleBehavior.gd" type="Script" id=7]
 [ext_resource path="res://nodes/actions/MessageDialogAction.gd" type="Script" id=8]
 [ext_resource path="res://mods/cat_modutils/world/ui/redkrab_portrait.png" type="Texture" id=9]
-[ext_resource path="res://mods/cat_modutils/world/MagikrabSprite.gd" type="Script" id=10]
+[ext_resource path="res://addons/misc_utils/actions/composites/Selector.gd" type="Script" id=10]
 [ext_resource path="res://mods/cat_modutils/world/RedkrabReturn.gd" type="Script" id=11]
 [ext_resource path="res://nodes/actions/AdvanceTimeAction.gd" type="Script" id=12]
-[ext_resource path="res://nodes/actions/MenuDialogAction.gd" type="Script" id=13]
-[ext_resource path="res://addons/misc_utils/actions/composites/Sequence.gd" type="Script" id=15]
+[ext_resource path="res://nodes/actions/ConfirmDialogAction.gd" type="Script" id=13]
 [ext_resource path="res://nodes/actions/WarpAction.gd" type="Script" id=20]
 [ext_resource path="res://addons/misc_utils/actions/decorators/Succeeder.gd" type="Script" id=21]
 [ext_resource path="res://mods/cat_modutils/world/ui/stage_coach.png" type="Texture" id=22]
@@ -23,7 +22,8 @@
 
 [node name="Redkrab" instance=ExtResource( 2 )]
 script = ExtResource( 11 )
-direction = Vector2( 0, 0 )
+npc_name = "MODUTILS_REDKRAB_NAME"
+pronouns = 0
 wired_door = NodePath("")
 
 [node name="Sprite" parent="." index="2"]
@@ -43,7 +43,6 @@ sparkle = false
 sprite_rotation = Vector3( 0, 0, 0 )
 
 [node name="Sprite" parent="Sprite" index="0" instance=ExtResource( 1 )]
-script = ExtResource( 10 )
 
 [node name="IdleBehavior" type="Node" parent="." index="8"]
 script = ExtResource( 7 )
@@ -70,28 +69,26 @@ messages = [ "MODUTILS_REDKRAB_RETURN" ]
 wait_for_confirm = false
 close_after = false
 
-[node name="MenuDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction" index="0"]
+[node name="Selector" type="Node" parent="InteractionBehavior/MessageDialogAction" index="0"]
+script = ExtResource( 10 )
+
+[node name="ConfirmDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector" index="0"]
 script = ExtResource( 13 )
-menu_options = [ "UI_BUTTON_YES", "UI_BUTTON_NO" ]
-default_option = 1
 
-[node name="Sequence_Return" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction" index="0"]
-script = ExtResource( 15 )
-
-[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return" index="0"]
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction" index="0"]
 script = ExtResource( 8 )
 portrait = ExtResource( 9 )
 title = "MODUTILS_REDKRAB_NAME"
 messages = [ "MODUTILS_REDKRAB_TRAVEL2" ]
 
-[node name="Succeeder" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return" index="1"]
+[node name="Succeeder" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction" index="1"]
 script = ExtResource( 21 )
 
-[node name="SetWireStateAction" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return/Succeeder" index="0"]
+[node name="SetWireStateAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction/Succeeder" index="0"]
 script = ExtResource( 24 )
 state = true
 
-[node name="NodeRefActionValue" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return/Succeeder/SetWireStateAction" index="0"]
+[node name="NodeRefActionValue" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction/Succeeder/SetWireStateAction" index="0"]
 script = ExtResource( 26 )
 __meta__ = {
 "action_tree": true
@@ -99,7 +96,7 @@ __meta__ = {
 kind = 4
 blackboard_key = "travel_door"
 
-[node name="WarpAction" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return" index="2"]
+[node name="WarpAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction" index="2"]
 script = ExtResource( 20 )
 warp_target_scene = "res://mods/cat_modutils/world/Station.tscn"
 warp_target_name = "PlatformD"
@@ -107,11 +104,11 @@ transition_kind = 2
 loading_audio = ExtResource( 23 )
 loading_graphic = ExtResource( 22 )
 
-[node name="AdvanceTimeAction" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction/Sequence_Return/WarpAction" index="0"]
+[node name="AdvanceTimeAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector/ConfirmDialogAction/WarpAction" index="0"]
 script = ExtResource( 12 )
 advance_by = 6.0
 
-[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction/MenuDialogAction" index="1"]
+[node name="MessageDialogAction" type="Node" parent="InteractionBehavior/MessageDialogAction/Selector" index="1"]
 script = ExtResource( 8 )
 portrait = ExtResource( 9 )
 title = "MODUTILS_REDKRAB_NAME"

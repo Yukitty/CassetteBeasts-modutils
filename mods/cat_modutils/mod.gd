@@ -9,6 +9,7 @@ const MOD_STRINGS: Array = [
 ]
 
 # Submodules
+var bugfix: Reference
 var callbacks: Reference
 var trans_patch: Reference
 var settings: Reference
@@ -23,14 +24,16 @@ func _init() -> void:
 
 	# Load submodules
 	callbacks = preload("callbacks.gd").new()
+	bugfix = preload("bugfix.gd").new(self)
 	trans_patch = preload("trans_patch.gd").new(self)
 	settings = preload("settings.gd").new(self)
 	class_patch = preload("class_patch.gd").new()
 	cheat_mod = preload("cheat_mod.gd").new(self)
-	world = preload("world.gd").new()
+	world = preload("world.gd").new(self)
 
-	# Run post_init next frame, to work around init_content oversight in v1.1.2
-	DLC.get_tree().connect("idle_frame", self, "_on_post_init", [], CONNECT_ONESHOT)
+func init_content() -> void:
+	# Call post_init deferred, to work around init_content oversight in v1.1.2
+	call_deferred("_on_post_init")
 
 func _on_post_init() -> void:
 	emit_signal("post_init")

@@ -1,26 +1,33 @@
 extends Reference
 
 # Constants
-const RESOURCES: Dictionary = {
-	"res://menus/settings/SettingsMenu.gd":
-		preload("settings/SettingsMenu.gd"),
-}
+const ModsTab: PackedScene = preload("settings/ModsTab.tscn")
+const CFG_PATH: String = "user://mod_settings.cfg"
 
 # State
 var mods_tab_disabled: bool = true
 var _mod_settings: Array
-var _cfg: ConfigFile
+
 
 func _init(modutils: Reference) -> void:
-	var res: Resource
-	for k in RESOURCES:
-		res = RESOURCES[k]
-		res.take_over_path(k)
-
-	_cfg = ConfigFile.new()
-	_cfg.load("user://mod_settings.cfg")
-
 	modutils.connect("post_init", self, "_on_post_init")
+	modutils.callbacks.connect_scene_ready("res://menus/settings/SettingsMenu.tscn", self, "_on_SettingsMenu_ready")
+
+
+func _on_SettingsMenu_ready(scene: Control) -> void:
+	# Only add mods panel if a mod is using it.
+	var modutils: ContentInfo = DLC.mods_by_id["cat_modutils"]
+	if modutils.settings.mods_tab_disabled:
+		return
+
+	var tab: Control = ModsTab.instance()
+	scene.content_container.add_child(tab)
+	tab.visible = false
+	scene.tabs.insert(3, {
+		"name": "UI_SETTINGS_MODS",
+		"node": tab,
+	})
+
 
 func _on_post_init() -> void:
 	# Index all mods looking for a `MODUTILS.settings` Array of Dictionary.
@@ -31,11 +38,14 @@ func _on_post_init() -> void:
 	mods_tab_disabled = _mod_settings.size() == 0
 
 	# Restore saved cfg values for loaded mods.
+	var cfg := ConfigFile.new()
+	cfg.load(CFG_PATH)
 	for mod in _mod_settings:
 		for widget in mod.MODUTILS.settings:
-			mod.set(widget.property, _cfg.get_value(
+			mod.set(widget.property, cfg.get_value(
 				mod.id, widget.property, mod.get(widget.property)
 			))
+
 
 func _sort_mods(a: ContentInfo, b: ContentInfo) -> bool:
 	# Sort mods by localized name

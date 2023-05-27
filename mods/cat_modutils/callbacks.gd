@@ -48,7 +48,7 @@ func connect_class_ready(script, callback_owner: Object, callback_function: Stri
 	if script is Resource:
 		script = script.resource_path
 	assert(script is String)
-	if not (script in _class_ready):
+	if not script in _class_ready:
 		_class_ready[script] = []
 	_class_ready[script].push_back({
 		"owner": callback_owner,
@@ -59,7 +59,7 @@ func connect_class_ready(script, callback_owner: Object, callback_function: Stri
 # Scene instance callbacks can be used to inject content into an existing scene
 # when it spawns, even for sub-scenes that aren't typically the root.
 func connect_scene_ready(scene: String, callback_owner: Object, callback_function: String, callback_binds: Array = []) -> void:
-	if not (scene in  _scene_ready):
+	if not scene in _scene_ready:
 		_scene_ready[scene] = []
 	_scene_ready[scene].push_back({
 		"owner": callback_owner,
@@ -70,9 +70,9 @@ func connect_scene_ready(scene: String, callback_owner: Object, callback_functio
 # This is for chunked maps like the Overworld.
 func connect_chunk_setup(scene: String, chunk_index: Vector2, callback_owner: Object, callback_function: String, callback_binds: Array = []) -> void:
 	chunk_index = Vector2(floor(chunk_index.x), floor(chunk_index.y))
-	if not (scene in _chunk_ready):
+	if not scene in _chunk_ready:
 		_chunk_ready[scene] = {}
-	if not (chunk_index in _chunk_ready[scene]):
+	if not chunk_index in _chunk_ready[scene]:
 		_chunk_ready[scene][chunk_index] = []
 	_chunk_ready[scene][chunk_index].push_back({
 		"owner": callback_owner,
