@@ -183,6 +183,19 @@ func add_modclub_destination(name: String, warp_target_scene: String, warp_targe
 	})
 
 
+# Call this to recursively add the nodes from `merge` into `root`,
+# travelling down branches of nodes with matching names so only
+# "new" nodes are added as children.
+func merge_tree(root: Node, merge: Node) -> void:
+	assert(root.name == merge.name)
+	for child in merge.get_children():
+		if root.has_node(child.name):
+			merge_tree(root.get_node(child.name), child)
+			continue
+		merge.remove_child(child)
+		root.add_child(child)
+
+
 func _on_MapPauseMenu_ready(scene: Control) -> void:
 	if not modclub_return_button_active:
 		return

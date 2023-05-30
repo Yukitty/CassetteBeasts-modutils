@@ -1,7 +1,6 @@
 extends Reference
 
 func _init(modutils: ContentInfo) -> void:
-	preload("bugfix/WarpRegion.gd").take_over_path("res://nodes/warp_region/WarpRegion.gd")
 	modutils.callbacks.connect_scene_ready("res://sprites/monsters/world/magikrab.json", self, "_on_MagikrabSprite_ready")
 
 
