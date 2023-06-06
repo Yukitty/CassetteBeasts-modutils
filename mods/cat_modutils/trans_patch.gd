@@ -17,6 +17,7 @@ func _init(modutils: Reference) -> void:
 	modutils.connect("post_init", self, "_on_post_init")
 
 func _on_post_init() -> void:
+	# DEPRECIATED
 	for mod in DLC.mods:
 		if mod.has_method("add_mod_translations"):
 			mod.add_mod_translations(self)

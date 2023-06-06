@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://sprites/monsters/world/magikrab.json" type="PackedScene" id=1]
+[ext_resource path="res://mods/cat_modutils/world/RedkrabWorldSprite.tscn" type="PackedScene" id=1]
 [ext_resource path="res://world/npc/NPC.tscn" type="PackedScene" id=2]
 [ext_resource path="res://nodes/actions/values/GetPlayer.gd" type="Script" id=3]
 [ext_resource path="res://nodes/actions/FaceTowardsAction.gd" type="Script" id=4]
@@ -35,9 +35,8 @@ wired_door = NodePath("")
 
 [node name="Sprite" parent="." index="2"]
 idle = "idle"
-swap_colors = [ Color( 0.458824, 0.686275, 0.980392, 1 ), Color( 0.376471, 0.478431, 0.921569, 1 ), Color( 0.27451, 0.282353, 0.807843, 1 ), Color( 0.2, 0.156863, 0.462745, 1 ), Color( 0.121569, 0.0784314, 0.262745, 1 ) ]
-default_palette = [ Color( 0.458824, 0.686275, 0.980392, 1 ), Color( 0.376471, 0.478431, 0.921569, 1 ), Color( 0.27451, 0.282353, 0.807843, 1 ), Color( 0.2, 0.156863, 0.462745, 1 ), Color( 0.121569, 0.0784314, 0.262745, 1 ) ]
-palette = [ Color( 0.827451, 0.478431, 0.478431, 1 ), Color( 0.72549, 0.243137, 0.243137, 1 ), Color( 0.470588, 0.156863, 0.156863, 1 ), Color( 0.278431, 0.0941176, 0.0941176, 1 ), Color( 0.14902, 0.0509804, 0.0509804, 1 ) ]
+swap_colors = [ Color( 0.282353, 0.054902, 0.12549, 1 ), Color( 0.435294, 0.0862745, 0.145098, 1 ), Color( 0.694118, 0.12549, 0.192157, 1 ), Color( 0.913725, 0.258824, 0.247059, 1 ), Color( 0.976471, 0.521569, 0.443137, 1 ) ]
+default_palette = [ Color( 0.282353, 0.054902, 0.12549, 1 ), Color( 0.435294, 0.0862745, 0.145098, 1 ), Color( 0.694118, 0.12549, 0.192157, 1 ), Color( 0.913725, 0.258824, 0.247059, 1 ), Color( 0.976471, 0.521569, 0.443137, 1 ) ]
 emission_palette = [ Color( 0.454902, 0.282353, 0.898039, 1 ), Color( 0.701961, 0.466667, 0.972549, 1 ), Color( 0.890196, 0.686275, 0.996078, 1 ), Color( 1, 1, 1, 1 ) ]
 emission = Color( 0, 0, 0, 1 )
 wave_amplitude = 0.0

@@ -37,9 +37,14 @@ var _chunk_init: bool = false
 var _modclub_population: Array
 var _modclub_destinations: Array
 
+# Modified Resources
+var _magikrab: PackedScene
+
+
 func _init(modutils: ContentInfo) -> void:
 	# Possess Magikrab (sorry! I'll find another way later!)
-	preload("world/Magikrab.tscn").take_over_path("res://world/recurring_npcs/Magikrab.tscn")
+	_magikrab = load("res://mods/cat_modutils/world/Magikrab.tscn")
+	_magikrab.take_over_path("res://world/recurring_npcs/Magikrab.tscn")
 
 	# Don't preserve Mod Club Station
 	# I highly recommend your mod do the same, for dungeons.

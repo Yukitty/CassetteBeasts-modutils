@@ -17,7 +17,7 @@ Please see the [official Cassette Beasts wiki Mod User Guide](https://wiki.casse
 
 ## Legal notice
 
-“Redkrab” character design and art assets © 2023 by Simon S. is licensed under [CC BY-NC 4.0 ![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc/4.0/)
+“Redkrab” character and related art assets © 2023 by Simon S., DEssence.Dev, Brad Darkstorm, and Yukita Mayako are licensed under [CC BY-NC 4.0 ![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc/4.0/)
 
 All other original mod assets, scripts, and edits are published under [MIT license](LICENSE.txt)
 
