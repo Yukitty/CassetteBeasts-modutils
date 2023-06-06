@@ -16,18 +16,19 @@ var class_patch: Reference
 var cheat_mod: Reference
 var world: Reference
 
-func init_content() -> void:
-	# Add translation strings
-	for translation in MOD_STRINGS:
-		TranslationServer.add_translation(translation)
-
-	# Load submodules
+func _init() -> void:
+	# Load submodules ASAP so we're ready for other mods
 	callbacks = preload("callbacks.gd").new()
 	trans_patch = preload("trans_patch.gd").new(self)
 	settings = preload("settings.gd").new(self)
 	class_patch = preload("class_patch.gd").new()
 	cheat_mod = preload("cheat_mod.gd").new(self)
 	world = preload("world.gd").new(self)
+
+func init_content() -> void:
+	# Add translation strings
+	for translation in MOD_STRINGS:
+		TranslationServer.add_translation(translation)
 
 	# Call post_init deferred, to work around init_content oversight in v1.1.2
 	call_deferred("_on_post_init")

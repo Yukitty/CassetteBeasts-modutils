@@ -42,14 +42,6 @@ var _magikrab: PackedScene
 
 
 func _init(modutils: ContentInfo) -> void:
-	# Possess Magikrab (sorry! I'll find another way later!)
-	_magikrab = load("res://mods/cat_modutils/world/Magikrab.tscn")
-	_magikrab.take_over_path("res://world/recurring_npcs/Magikrab.tscn")
-
-	# Don't preserve Mod Club Station
-	# I highly recommend your mod do the same, for dungeons.
-	SceneManager.PRESERVABLE_SCENE_BLACKLIST.push_back("res://mods/cat_modutils/")
-
 	# Default NPC population (flavor text)
 	# The flags prevent these NPCs from unlocking Mod Club Station by themselves.
 	_modclub_population = [
@@ -79,18 +71,26 @@ func _init(modutils: ContentInfo) -> void:
 		}
 	]
 
-	# Add "Mod Club Station" to overworld fast travel map if discovered
-	SaveSystem.connect("file_loaded", self, "_init_modclub_chunk_feature")
-
-	# Add "Return to Mod Club Station" button to menu
-	call_deferred("_init_modclub_return_button")
-	SceneManager.connect("scene_changed", self, "_on_scene_changed")
-
 	# Add post_init processing
 	modutils.connect("post_init", self, "_on_post_init")
 
 
 func _on_post_init() -> void:
+	# Possess Magikrab (sorry! I'll find another way later!)
+	_magikrab = load("res://mods/cat_modutils/world/Magikrab.tscn")
+	_magikrab.take_over_path("res://world/recurring_npcs/Magikrab.tscn")
+
+	# Don't preserve Mod Club Station
+	# I highly recommend your mod do the same, for dungeons.
+	SceneManager.PRESERVABLE_SCENE_BLACKLIST.push_back("res://mods/cat_modutils/")
+
+	# Add "Mod Club Station" to overworld fast travel map if discovered
+	SaveSystem.connect("file_loaded", self, "_init_modclub_chunk_feature")
+
+	# Add "Return to Mod Club Station" button to menu
+	_init_modclub_return_button()
+	SceneManager.connect("scene_changed", self, "_on_scene_changed")
+
 	# Read data from all mods providing a MODUTILS table
 	for mod in DLC.mods:
 		if "MODUTILS" in mod and mod.MODUTILS is Dictionary and "world" in mod.MODUTILS and mod.MODUTILS.world is Dictionary:
