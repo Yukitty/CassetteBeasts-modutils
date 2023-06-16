@@ -6,12 +6,15 @@ var _scene_ready: Dictionary
 var _chunk_ready: Dictionary
 var _level_streamer: LevelStreamer
 
+
 func _init() -> void:
 	DLC.get_tree().connect("node_added", self, "_on_node_added")
 	connect_class_ready("res://addons/level_streamer/LevelStreamer.gd", self, "_on_LevelStreamer_ready")
 
+
 func _on_LevelStreamer_ready(level_streamer: Node) -> void:
 	_level_streamer = level_streamer
+
 
 func _on_node_added(node: Node) -> void:
 	var scene_path: String = node.filename
@@ -43,6 +46,7 @@ func _on_node_added(node: Node) -> void:
 		for callback in _scene_ready[scene_path]:
 			node.connect("ready", callback.owner, callback.function, [node] + callback.binds, CONNECT_DEFERRED)
 
+
 # Class callbacks can be used to mass-edit many scenes that share a common ancestor
 func connect_class_ready(script, callback_owner: Object, callback_function: String, callback_binds: Array = []) -> void:
 	if script is Resource:
@@ -56,6 +60,7 @@ func connect_class_ready(script, callback_owner: Object, callback_function: Stri
 		"binds": callback_binds,
 		})
 
+
 # Scene instance callbacks can be used to inject content into an existing scene
 # when it spawns, even for sub-scenes that aren't typically the root.
 func connect_scene_ready(scene: String, callback_owner: Object, callback_function: String, callback_binds: Array = []) -> void:
@@ -66,6 +71,7 @@ func connect_scene_ready(scene: String, callback_owner: Object, callback_functio
 		"function": callback_function,
 		"binds": callback_binds,
 		})
+
 
 # This is for chunked maps like the Overworld.
 func connect_chunk_setup(scene: String, chunk_index: Vector2, callback_owner: Object, callback_function: String, callback_binds: Array = []) -> void:

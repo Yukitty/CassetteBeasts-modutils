@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 id = "cat_modutils"
 name = "Mod Utils"
-version_code = 8
-version_string = "1.4.1"
+version_code = 9
+version_string = "1.5"
 author = "cat"
 save_file_format_tag = ""
 save_file_format_tag_version = 0

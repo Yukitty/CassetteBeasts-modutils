@@ -9,15 +9,20 @@ height = 8.0
 radius = 10.0
 
 [node name="Passenger2" instance=ExtResource( 2 )]
-max_alpha = 0.2
+max_alpha = 0.333
+sprite_body = null
+character = null
 
 [node name="Behavior" type="Node" parent="." index="0"]
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="3"]
-albedo = Color( 1, 1, 1, 0.2 )
+albedo = Color( 1, 1, 1, 0.333333 )
+sprite_rotation = Vector3( 0, 0, 0 )
 
 [node name="PlayerDetector" parent="." index="10" instance=ExtResource( 1 )]
+oneshot = true
+require_similar_player_scale = false
 
 [node name="CollisionShape" type="CollisionShape" parent="PlayerDetector" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )

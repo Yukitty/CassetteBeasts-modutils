@@ -36,9 +36,8 @@ var modclub_return_button_active: bool = false setget _set_modclub_return_button
 var _chunk_init: bool = false
 var _modclub_population: Array
 var _modclub_destinations: Array
-
-# Modified Resources
-var _magikrab: PackedScene
+var _magikrab_extra_behaviors: PackedScene
+var _magikrab_dest_modclub: PackedScene
 
 
 func _init(modutils: ContentInfo) -> void:
@@ -71,14 +70,12 @@ func _init(modutils: ContentInfo) -> void:
 		}
 	]
 
-	# Add post_init processing
-	modutils.connect("post_init", self, "_on_post_init")
+	# Finish init later
+	assert(not SceneManager.preloader.singleton_setup_complete)
+	yield(SceneManager.preloader, "singleton_setup_completed")
 
-
-func _on_post_init() -> void:
-	# Possess Magikrab (sorry! I'll find another way later!)
-	_magikrab = load("res://mods/cat_modutils/world/Magikrab.tscn")
-	_magikrab.take_over_path("res://world/recurring_npcs/Magikrab.tscn")
+	# Add extra behaviors to Magikrab
+	modutils.callbacks.connect_scene_ready("res://world/recurring_npcs/Magikrab.tscn", self, "_on_Magikrab_ready")
 
 	# Don't preserve Mod Club Station
 	# I highly recommend your mod do the same, for dungeons.
@@ -93,7 +90,8 @@ func _on_post_init() -> void:
 
 	# Read data from all mods providing a MODUTILS table
 	for mod in DLC.mods:
-		if "MODUTILS" in mod and mod.MODUTILS is Dictionary and "world" in mod.MODUTILS and mod.MODUTILS.world is Dictionary:
+		if "MODUTILS" in mod and mod.MODUTILS is Dictionary and "world" in mod.MODUTILS:
+			assert(mod.MODUTILS.world is Dictionary)
 			_init_data(mod.MODUTILS.world)
 
 	# Verify the results are as expected
@@ -118,6 +116,66 @@ func _init_data(world_defs: Dictionary) -> void:
 		_modclub_destinations.append_array(world_defs.modclub_destinations)
 
 
+# Edit Magikrab for Mod Club Station
+func _on_Magikrab_ready(scene: Spatial) -> void:
+	assert(scene != null)
+	assert("behavior" in scene and scene.behavior is Cutscene)
+
+	# Don't even touch Magikrab unless Mod Club Station should open
+	if not is_modclub_populated() and not SaveState.has_flag("modutils_modclub_unlocked"):
+		return
+
+	# Only edit Magikrab once!
+	# We need to do this because Magikrab sets request_ready every time.
+	if scene.has_meta("modutils_modclub"):
+		return
+	scene.set_meta("modutils_modclub", true)
+
+	# Load behavior scenes from file if needed
+	if not _magikrab_extra_behaviors or not _magikrab_dest_modclub:
+		_magikrab_extra_behaviors = load("res://mods/cat_modutils/world/behaviors/Magikrab.tscn")
+		_magikrab_dest_modclub = load("res://mods/cat_modutils/world/behaviors/MagikrabDest_ModClub.tscn")
+
+	# Set blackboard values
+	scene.behavior.blackboard["modutils_world"] = self
+
+	# Unpack extra behaviors from scene
+	var extra_behaviors: Node = _magikrab_extra_behaviors.instance()
+	var news_modsavailable: Action = extra_behaviors.get_child(0)
+	var mainmenu_platformd: Action = extra_behaviors.get_child(1)
+	extra_behaviors.remove_child(news_modsavailable)
+	extra_behaviors.remove_child(mainmenu_platformd)
+	extra_behaviors.free()
+
+	# Add Mod Club Station opening news
+	var news: Selector = scene.behavior.get_node("Selector/Sequence/Selector")
+	news.add_child(news_modsavailable)
+	news.move_child(news_modsavailable, news.get_child_count() - 2)
+
+	# Add Platform D to bottom of main menu
+	var mainmenu: MenuDialogAction = scene.behavior.get_node("Selector/Sequence/Repeater/MessageDialogAction/MenuDialogAction")
+	mainmenu.menu_options.insert(mainmenu.menu_options.size() - 1, "MAGIKRAB_MENU_OPTION_MODUTILS_PLATFORMD")
+	mainmenu.default_option = mainmenu.menu_options.size() - 1
+	mainmenu.add_child(mainmenu_platformd)
+	mainmenu.move_child(mainmenu_platformd, mainmenu.default_option - 1)
+
+	# Connect interacted signal because the destination menu is silly
+	# and completely refreshes every single time you interact,
+	# instead of just using a static tree of CheckConditionAction
+	# like everywhere else in the game.
+	scene.get_node("NPC/Interaction").connect("interacted", self, "_on_Magikrab_interacted", [scene], CONNECT_DEFERRED)
+
+
+func _on_Magikrab_interacted(_player: NPC, scene: Spatial) -> void:
+	# Add Mod Club Station to second in destinations menu
+	# The first option is always Gramophone Cafe, so this is a guaranteed spot.
+	var destmenu_modclub: Action = _magikrab_dest_modclub.instance()
+	scene.destination_menu.menu_options.insert(1, "MAGIKRAB_TRAVEL_OPTION_MODUTILS")
+	scene.destination_menu.default_option = scene.destination_menu.menu_options.size() - 1
+	scene.destination_menu.add_child(destmenu_modclub)
+	scene.destination_menu.move_child(destmenu_modclub, 1)
+
+
 # Tests if Mod Club Station should be accessible.
 func is_modclub_populated() -> bool:
 	if Debug.dev_mode:
@@ -137,10 +195,12 @@ func is_modclub_populated() -> bool:
 	return false
 
 # Adds fast travel waypoint to an overworld chunk for Mod Club Station
-func _init_modclub_chunk_feature() -> void:
+func _init_modclub_chunk_feature(force: bool = false) -> void:
+	if _chunk_init:
+		return
 	# Only if Mod Club Station has been unlocked already!
 	# (Prevents seeing hidden feature that can't be unlocked.)
-	if _chunk_init or not SaveState.has_flag("modutils_modclub_unlocked"):
+	if not force and not SaveState.has_flag("modutils_modclub_unlocked"):
 		return
 	var chunk_metadata: Datatable = Datatables.load(_OVERWORLD_METADATA.chunk_metadata_path)
 	var chunk: MapChunkMetadata = chunk_metadata.table["overworld_3_0"]

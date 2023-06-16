@@ -2,6 +2,52 @@ extends Reference
 
 var processed_code: Dictionary = {}
 
+
+func _init() -> void:
+	# Run super-early callback for class patcher
+	# This is basically a mid-execution pre-emption of the DLC singleton
+	# and I hate it.
+
+	# Fetch ALL mod metadata resources
+	# except for our own, which is currently being initialized
+	var dir := Directory.new()
+	var err: int = dir.open("res://mods/")
+	assert(err == OK)
+	dir.list_dir_begin(true, true)
+	assert(err == OK)
+	var mods: Array = []
+	while true:
+		var file = dir.get_next()
+		if file.empty():
+			break
+		if file == "cat_modutils":
+			continue
+		file = "res://mods/%s/metadata.tres" % file
+		if dir.file_exists(file):
+			var meta: ContentInfo = load(file) as ContentInfo
+			if meta:
+				mods.push_back(meta)
+	dir.list_dir_end()
+
+	# Iterate all mod metadata
+	# and apply patches from the MODUTILS global const, if present.
+	for meta in mods:
+		if "MODUTILS" in meta and meta.MODUTILS is Dictionary and "class_patch" in meta.MODUTILS:
+			assert(meta.MODUTILS.class_patch is Array and not meta.MODUTILS.class_patch.empty())
+			for def in meta.MODUTILS.class_patch:
+				assert(def is Dictionary and not def.empty())
+				assert("patch" in def and def.patch is String and not def.patch.empty())
+				assert("target" in def and def.target is String and not def.target.empty())
+				patch(def.patch, def.target)
+
+	# Now that we've initialized all of the mods that weren't loaded yet,
+	# we need to hold the references until DLC is finished taking them.
+	# This will prevent headaches from repeated _init calls.
+	# A simple yield should do nicely here.
+	assert(not SceneManager.preloader.singleton_setup_complete)
+	yield(SceneManager.preloader, "singleton_setup_completed")
+
+
 func get_class_script(script: GDScript) -> String:
 	# First, check if plain text source_code is already available.
 	# That would be a sign someone else has edited the file already.
@@ -28,9 +74,11 @@ func get_class_script(script: GDScript) -> String:
 
 	return source_code
 
+
 func set_class_script(script: GDScript, source_code: String) -> void:
 	script.source_code = source_code
 	script.reload()
+
 
 func patch_process_code(path: String, code: String) -> void:
 	var currentfunc: String = "global"
@@ -48,6 +96,7 @@ func patch_process_code(path: String, code: String) -> void:
 			processed_code[path][currentfunc] = templine + line
 		else:
 			processed_code[path][currentfunc] = line
+
 
 func patch(patch_path: String, target_path: String, toprint: bool = false) -> void:
 	# As a first step, we grab the file that is to replace, and decompile its variables and functions
@@ -219,6 +268,7 @@ func patch(patch_path: String, target_path: String, toprint: bool = false) -> vo
 		print(finalcode)
 	set_class_script(load(target_path), finalcode)
 
+
 func patch_removelines(what: String, function: String, code: String) -> void:
 	var string: String = processed_code[code][function]
 	var pos: int = processed_code[code][function].find(what)
@@ -228,8 +278,10 @@ func patch_removelines(what: String, function: String, code: String) -> void:
 
 	processed_code[code][function] = string
 
+
 func patch_removefunc(what: String, code: String) -> void:
 	processed_code[code].erase(what)
+
 
 func patch_addlines(what: String, before: bool, function: String, code: String) -> void:
 	var string: String = processed_code[code][function]
@@ -241,6 +293,7 @@ func patch_addlines(what: String, before: bool, function: String, code: String) 
 	else:
 		processed_code[code][function] = string + "\n" + what
 
+
 func patch_addlineshere(what: String, where: String, function: String, code: String) -> void:
 	var string: String = processed_code[code][function]
 	var pos: int = processed_code[code][function].find(where)
@@ -248,12 +301,15 @@ func patch_addlineshere(what: String, where: String, function: String, code: Str
 	if pos != -1:
 		processed_code[code][function] = string.replace(where, where + "\n" + what)
 
+
 func patch_addfunc(what: String, function: String, code: String) -> void:
 	processed_code[code][function] = what
+
 
 func patch_replacelines(what: String, forwhat: String, function: String, code: String) -> void:
 	var string: String = processed_code[code][function]
 	processed_code[code][function] = string.replace(what, forwhat)
+
 
 func patch_replacetext(what: String, forwhat: String, where: String, function: String, code: String) -> void:
 	var string: String = processed_code[code][function]

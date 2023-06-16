@@ -4,11 +4,11 @@ extends Reference
 var _file_button: PackedScene
 
 
-func _init(modutils: Reference) -> void:
-	modutils.connect("post_init", self, "_on_post_init")
+func _init() -> void:
+	# Finish init later
+	assert(not SceneManager.preloader.singleton_setup_complete)
+	yield(SceneManager.preloader, "singleton_setup_completed")
 
-
-func _on_post_init() -> void:
 	# Index all mods looking for a `MODUTILS.cheat_mod` flag
 	var enabled: bool = false
 	for mod in DLC.mods:
@@ -23,7 +23,6 @@ func _on_post_init() -> void:
 	_file_button = load("res://mods/cat_modutils/cheat_mod/FileButton.gd")
 	_file_button.take_over_path("res://menus/title/FileButton.gd")
 	SaveSystem.connect("file_loaded", self, "_on_SaveSystem_file_loaded")
-
 
 
 func _on_SaveSystem_file_loaded() -> void:

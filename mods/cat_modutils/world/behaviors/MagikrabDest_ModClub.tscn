@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://nodes/actions/CheckConditionAction.gd" type="Script" id=1]
+[ext_resource path="res://nodes/actions/SetBlackboardValues.gd" type="Script" id=2]
+
+[node name="CheckCondition_ModClubStation" type="Node"]
+script = ExtResource( 1 )
+require_flags = [ "modutils_modclub_unlocked" ]
+deny_scene_path = "res://mods/cat_modutils/world/Station.tscn"
+
+[node name="SetBlackboardValues" type="Node" parent="."]
+script = ExtResource( 2 )
+bb_values = {
+"warp_target_name": "PlatformA",
+"warp_target_scene": "res://mods/cat_modutils/world/Station.tscn"
+}

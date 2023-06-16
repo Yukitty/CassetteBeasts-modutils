@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://nodes/actions/CheckConditionAction.gd" type="Script" id=1]
+[ext_resource path="res://nodes/actions/MessageDialogAction.gd" type="Script" id=2]
+[ext_resource path="res://sprites/portraits/magikrab.png" type="Texture" id=3]
+[ext_resource path="res://addons/misc_utils/actions/composites/Selector.gd" type="Script" id=4]
+[ext_resource path="res://addons/misc_utils/actions/decorators/Failer.gd" type="Script" id=5]
+[ext_resource path="res://addons/misc_utils/actions/values/GetBlackboardValue.gd" type="Script" id=7]
+[ext_resource path="res://addons/misc_utils/actions/CallMethodAction.gd" type="Script" id=8]
+
+[node name="Magikrab_ExtraBehaviors" type="Node"]
+
+[node name="CheckCondition_ModsAvailable" type="Node" parent="."]
+script = ExtResource( 1 )
+one_time_flag = "modutils_modclub_unlocked"
+set_flags = [ "met_magikrab_in_modutils" ]
+
+[node name="MessageDialogAction" type="Node" parent="CheckCondition_ModsAvailable"]
+script = ExtResource( 2 )
+portrait = ExtResource( 3 )
+title = "MAGIKRAB_NAME"
+messages = [ "MAGIKRAB_MODUTILS_INTRO1" ]
+close_after = false
+
+[node name="CallMethodAction" type="Node" parent="CheckCondition_ModsAvailable"]
+script = ExtResource( 8 )
+method = "_init_modclub_chunk_feature"
+args = [ true ]
+
+[node name="GetBlackboardValue" type="Node" parent="CheckCondition_ModsAvailable/CallMethodAction"]
+script = ExtResource( 7 )
+key = "modutils_world"
+
+[node name="CheckCondition_PlatformD" type="Node" parent="."]
+script = ExtResource( 1 )
+require_flags = [ "modutils_modclub_unlocked" ]
+
+[node name="Selector" type="Node" parent="CheckCondition_PlatformD"]
+script = ExtResource( 4 )
+
+[node name="CheckCondition_ModClubStation" type="Node" parent="CheckCondition_PlatformD/Selector"]
+script = ExtResource( 1 )
+require_scene_path = "res://mods/cat_modutils/world/Station.tscn"
+
+[node name="MessageDialogAction" type="Node" parent="CheckCondition_PlatformD/Selector/CheckCondition_ModClubStation"]
+script = ExtResource( 2 )
+portrait = ExtResource( 3 )
+title = "MAGIKRAB_NAME"
+messages = [ "MAGIKRAB_MODUTILS_PLATFORMD1", "MAGIKRAB_MODUTILS_PLATFORMD2_ALT" ]
+close_after = false
+
+[node name="MessageDialogAction" type="Node" parent="CheckCondition_PlatformD/Selector"]
+script = ExtResource( 2 )
+portrait = ExtResource( 3 )
+title = "MAGIKRAB_NAME"
+messages = [ "MAGIKRAB_MODUTILS_PLATFORMD1", "MAGIKRAB_MODUTILS_PLATFORMD2", "MAGIKRAB_MODUTILS_PLATFORMD3" ]
+close_after = false
+
+[node name="Failer" type="Node" parent="CheckCondition_PlatformD"]
+script = ExtResource( 5 )

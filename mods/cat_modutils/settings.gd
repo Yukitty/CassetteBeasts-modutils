@@ -10,26 +10,12 @@ var _mod_settings: Array
 
 
 func _init(modutils: Reference) -> void:
-	modutils.connect("post_init", self, "_on_post_init")
 	modutils.callbacks.connect_scene_ready("res://menus/settings/SettingsMenu.tscn", self, "_on_SettingsMenu_ready")
 
+	# Finish init later
+	assert(not SceneManager.preloader.singleton_setup_complete)
+	yield(SceneManager.preloader, "singleton_setup_completed")
 
-func _on_SettingsMenu_ready(scene: Control) -> void:
-	# Only add mods panel if a mod is using it.
-	var modutils: ContentInfo = DLC.mods_by_id["cat_modutils"]
-	if modutils.settings.mods_tab_disabled:
-		return
-
-	var tab: Control = ModsTab.instance()
-	scene.content_container.add_child(tab)
-	tab.visible = false
-	scene.tabs.insert(3, {
-		"name": "UI_SETTINGS_MODS",
-		"node": tab,
-	})
-
-
-func _on_post_init() -> void:
 	# Index all mods looking for a `MODUTILS.settings` Array of Dictionary.
 	for mod in DLC.mods:
 		if "MODUTILS" in mod and mod.MODUTILS.has("settings") and mod.MODUTILS.settings is Array and mod.MODUTILS.settings.size() > 0 and mod.MODUTILS.settings[0] is Dictionary:
@@ -45,6 +31,21 @@ func _on_post_init() -> void:
 			mod.set(widget.property, cfg.get_value(
 				mod.id, widget.property, mod.get(widget.property)
 			))
+
+
+func _on_SettingsMenu_ready(scene: Control) -> void:
+	# Only add mods panel if a mod is using it.
+	var modutils: ContentInfo = DLC.mods_by_id["cat_modutils"]
+	if modutils.settings.mods_tab_disabled:
+		return
+
+	var tab: Control = ModsTab.instance()
+	scene.content_container.add_child(tab)
+	tab.visible = false
+	scene.tabs.insert(3, {
+		"name": "UI_SETTINGS_MODS",
+		"node": tab,
+	})
 
 
 func _sort_mods(a: ContentInfo, b: ContentInfo) -> bool:

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://data/BaseItem.gd" type="Script" id=1]
+[ext_resource path="res://mods/cat_modutils/items/glass.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "MODUTILS_ITEM_GLASS_NAME"
+aux_name = ""
+icon = ExtResource( 2 )
+description = "MODUTILS_ITEM_GLASS_DESCRIPTION"
+category = "resources"
+base_stack_limit = 0
+stack_limit_category = ""
+consume_on_use = false
+discardable = true
+value = 500
+usable_contexts = 0
+battle_usage = 0
+sort_order = 0
