@@ -38,7 +38,10 @@ func _init() -> void:
 				assert(def is Dictionary and not def.empty())
 				assert("patch" in def and def.patch is String and not def.patch.empty())
 				assert("target" in def and def.target is String and not def.target.empty())
-				patch(def.patch, def.target)
+				if "print" in def and def.print is bool:
+					patch(def.patch, def.target, def.print)
+				else:
+					patch(def.patch, def.target)
 
 	# Now that we've initialized all of the mods that weren't loaded yet,
 	# we need to hold the references until DLC is finished taking them.

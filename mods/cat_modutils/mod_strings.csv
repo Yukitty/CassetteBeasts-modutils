@@ -56,8 +56,8 @@ MODUTILS_REDKRAB_RETURN,My fellows! Have you grown weary of this place? Shall we
 MODUTILS_REDKRAB_RETURN_NO1,Adventure here as long as you wish! I shall await your triumphant return with baited breath.
 MODUTILS_ITEM_GLASS_NAME,Glass
 MODUTILS_ITEM_DESCRIPTION_FOOTER,%s\n\n[color=#ab75e8]Provided by Mod Utils for general use.[/color]
-MODUTILS_TITLE_MOD_UPDATE,An update is available for {content_name}.\nPlease check the mod's release page for updates.
+MODUTILS_TITLE_MOD_UPDATE,An update is available for {content_name}.\nPlease check the mod's release page.
 MODUTILS_TITLE_MOD_UPDATE_WITH_URL1,An update is available for {content_name}.\nThe mod has provided a link to its home page.
-MODUTILS_TITLE_MOD_UPDATE_WITH_URL2,Open the following address in your web browser?\n{content_address}
+MODUTILS_TITLE_MOD_UPDATE_WITH_URL2,Open this address in your web browser?\n{content_address}
 MODUTILS_TITLE_MOD_ERROR1,There was an error downloading or parsing update info for {content_name}.
 MODUTILS_TITLE_MOD_ERROR2,"The mod may have updated, or this may be a temporary error.\nThe mod is still loaded and ready to use."
