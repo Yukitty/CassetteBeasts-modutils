@@ -154,6 +154,7 @@ func _on_Magikrab_ready(scene: Spatial) -> void:
 
 	# Add Platform D to bottom of main menu
 	var mainmenu: MenuDialogAction = scene.behavior.get_node("Selector/Sequence/Repeater/MessageDialogAction/MenuDialogAction")
+	mainmenu.menu_options = mainmenu.menu_options.duplicate()
 	mainmenu.menu_options.insert(mainmenu.menu_options.size() - 1, "MAGIKRAB_MENU_OPTION_MODUTILS_PLATFORMD")
 	mainmenu.default_option = mainmenu.menu_options.size() - 1
 	mainmenu.add_child(mainmenu_platformd)
