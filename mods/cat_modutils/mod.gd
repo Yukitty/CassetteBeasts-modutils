@@ -9,8 +9,24 @@ const MOD_STRINGS: Array = [
 ]
 
 const MODUTILS = {
-	"updates": "https://gist.githubusercontent.com/Yukitty/f113b1e2c11faad763a47ebc0a867643/raw/updates.json"
+	"updates": "https://gist.githubusercontent.com/Yukitty/f113b1e2c11faad763a47ebc0a867643/raw/updates.json",
+	"settings": [
+		{
+			"property": "setting_check_updates",
+			"type": "toggle",
+			"label": "UI_SETTINGS_CAT_MODUTILS_CHECK_UPDATES",
+		},
+		{
+			"property": "setting_randomize_dog_bootleg",
+			"type": "toggle",
+			"label": "UI_SETTINGS_CAT_MODUTILS_RANDOMIZE_DOG_BOOTLEG",
+		},
+	],
 }
+
+# Settings
+var setting_check_updates: bool = true
+var setting_randomize_dog_bootleg: bool = false
 
 # Submodules
 var callbacks: Reference
@@ -35,7 +51,7 @@ func _init() -> void:
 	cheat_mod = preload("cheat_mod.gd").new()
 	world = preload("world.gd").new(self)
 	items = preload("items.gd").new()
-	updates = preload("updates.gd").new()
+	updates = preload("updates.gd").new(self)
 
 
 func init_content() -> void:

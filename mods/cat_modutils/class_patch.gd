@@ -1,6 +1,7 @@
 extends Reference
 
-var processed_code: Dictionary = {}
+var processed_code: Dictionary
+var _class_cache: Dictionary
 
 
 func _init() -> void:
@@ -55,6 +56,7 @@ func get_class_script(script: GDScript) -> String:
 	# First, check if plain text source_code is already available.
 	# That would be a sign someone else has edited the file already.
 	var source_code: String = ""
+	var e: int
 
 	if script.has_source_code():
 		source_code = script.source_code
@@ -62,51 +64,99 @@ func get_class_script(script: GDScript) -> String:
 	# If we don't have source code, try loading it from the res:// file.
 	else:
 		var f := File.new()
-		# This assert fails if you didn't export the decompiled script with your mod.
-		assert(f.file_exists(script.resource_path))
-		f.open(script.resource_path, File.READ)
+		if not f.file_exists(script.resource_path):
+			push_error("Mod Utils: Script source doesn't exist: %s" % script.resource_path)
+			return ""
+		e = f.open(script.resource_path, File.READ)
+		if e != OK:
+			push_error("Mod Utils: Failed to open script source: %s" % script.resource_path)
+			return ""
 		source_code = f.get_as_text()
 		f.close()
 
 	# We have to remove class_name from the source code for Godot to load it.
 	var s: int = source_code.find("class_name")
-	var e: int
 	if s != -1:
-		e = source_code.find("\n", s)
+		e = source_code.find('\n', s)
 		source_code.erase(s, e - s + 1)
 
 	return source_code
 
 
-func set_class_script(script: GDScript, source_code: String) -> void:
+func set_class_script(script: GDScript, source_code: String) -> bool:
 	script.source_code = source_code
-	script.reload()
+	var e: int = script.reload()
+	if e == OK:
+		return true
+	push_error("Mod Utils: Failed to recompile script %s\nError code %02u" % [script.resource_path, e])
+	return false
 
 
-func patch_process_code(path: String, code: String) -> void:
+func load_script_source(path: String) -> String:
+	var source_code: String = ""
+	var e: int
+
+	# Pull source from Resource only if already loaded and available
+	# This should basically never happen if you're only using the patch() function
+	# because the code will already be in `processed_code`
+	if ResourceLoader.has_cached(path):
+		var res: GDScript = ResourceLoader.load(path, "GDScript")
+		if res and res.has_source_code():
+			source_code = res.source_code
+
+	# Pull source from file if not cached
+	if source_code.empty():
+		var f := File.new()
+		if not f.file_exists(path):
+			push_error("Mod Utils: Script source doesn't exist: %s\nMake sure you exported it with your mod!" % path)
+			return ""
+		e = f.open(path, File.READ)
+		if e != OK:
+			push_error("Mod Utils: Failed to open script source: %s\nError code %02u" % [path, e])
+			return ""
+		source_code = f.get_as_text()
+		f.close()
+
+	# We have to remove class_name from the source code for Godot to load it.
+	var s: int = source_code.find("class_name")
+	if s != -1:
+		e = source_code.find('\n', s)
+		source_code.erase(s, e - s + 1)
+
+	return source_code
+
+
+func patch_process_code(path: String, source_code: String) -> void:
 	var currentfunc: String = "global"
-	var line: String
-	processed_code[path] = {}
+	var d: Dictionary = {}
+	processed_code[path] = d
 
-	for x in code.split("\n"):
-		line = x
-		line += "\n"
+	for line in source_code.replace('\r', '').split('\n'):
+		line += '\n'
 		if line.begins_with("func"):
 			currentfunc = line.substr(5, line.find('(') - 5)
 
-		if processed_code[path].has(currentfunc):
-			var templine = processed_code[path][currentfunc]
-			processed_code[path][currentfunc] = templine + line
+		if currentfunc in d:
+			var templine = d[currentfunc]
+			d[currentfunc] = templine + line
 		else:
-			processed_code[path][currentfunc] = line
+			d[currentfunc] = line
 
 
 func patch(patch_path: String, target_path: String, toprint: bool = false) -> void:
-	# As a first step, we grab the file that is to replace, and decompile its variables and functions
-	var source_code: String =  get_class_script(load(target_path))
-	patch_process_code(target_path, source_code)
+	# As a first step, we grab the file that is to replace,
+	# and collect its variables and functions, if we haven't yet
+	if not target_path in processed_code:
+		var source_code: String = load_script_source(target_path)
+		if source_code.empty():
+			return
+		patch_process_code(target_path, source_code)
 
-	var patch_code: PoolStringArray = get_class_script(load(patch_path)).split("\n")
+	var patch_code_raw: String = load_script_source(patch_path)
+	if patch_code_raw.empty():
+		return
+	var patch_code: PoolStringArray = patch_code_raw.replace('\r', '').split('\n')
+
 	var currentfunc: String = "global"
 	for x in patch_code.size():
 		var line = patch_code[x].dedent()
@@ -172,45 +222,45 @@ func patch(patch_path: String, target_path: String, toprint: bool = false) -> vo
 			patch_removefunc(what, target_path)
 
 		if line.begins_with("ADD LINES"):
-				if line.ends_with("BEFORE") or line.ends_with("AFTER"):
-					var what = ""
-					var before = line.ends_with("BEFORE")
-					while true:
-						x += 1
-						line = patch_code[x].dedent()
+			if line.ends_with("BEFORE") or line.ends_with("AFTER"):
+				var what = ""
+				var before = line.ends_with("BEFORE")
+				while true:
+					x += 1
+					line = patch_code[x].dedent()
 
-						if line == "# PATCH: STOP":
-							break
-						else:
-							assert(!line.begins_with("# PATCH: "))
+					if line == "# PATCH: STOP":
+						break
+					else:
+						assert(!line.begins_with("# PATCH: "))
 
-						line = patch_code[x]
+					line = patch_code[x]
 
-						if (line.find("#>") != -1):
-							line.erase(line.find("#>"), 2)
+					if (line.find("#>") != -1):
+						line.erase(line.find("#>"), 2)
 
-						what += line + "\n"
+					what += line + "\n"
 
-					patch_addlines(what, before, currentfunc, target_path)
-				if line.ends_with("HERE"):
-					var what = ""
-					var where = patch_code[x-1]
-					while true:
-						x += 1
-						line = patch_code[x].dedent()
+				patch_addlines(what, before, currentfunc, target_path)
+			if line.ends_with("HERE"):
+				var what = ""
+				var where = patch_code[x-1]
+				while true:
+					x += 1
+					line = patch_code[x].dedent()
 
-						if line == "# PATCH: STOP":
-							break
-						else:
-							assert(!line.begins_with("# PATCH: "))
+					if line == "# PATCH: STOP":
+						break
+					else:
+						assert(!line.begins_with("# PATCH: "))
 
-						line = patch_code[x]
+					line = patch_code[x]
 
-						if (line.begins_with("#>")):
-							line.erase(0, 2)
+					if (line.begins_with("#>")):
+						line.erase(0, 2)
 
-						what += line + "\n"
-					patch_addlineshere(what, where, currentfunc, target_path)
+					what += line + "\n"
+				patch_addlineshere(what, where, currentfunc, target_path)
 
 		if line.begins_with("ADD FUNC"):
 			var what = ""
@@ -269,7 +319,10 @@ func patch(patch_path: String, target_path: String, toprint: bool = false) -> vo
 
 	if toprint:
 		print(finalcode)
-	set_class_script(load(target_path), finalcode)
+
+	if not target_path in _class_cache:
+		_class_cache[target_path] = ResourceLoader.load(target_path, "GDScript")
+	set_class_script(_class_cache[target_path], finalcode)
 
 
 func patch_removelines(what: String, function: String, code: String) -> void:

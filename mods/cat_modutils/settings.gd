@@ -28,9 +28,12 @@ func _init(modutils: Reference) -> void:
 	cfg.load(CFG_PATH)
 	for mod in _mod_settings:
 		for widget in mod.MODUTILS.settings:
-			mod.set(widget.property, cfg.get_value(
-				mod.id, widget.property, mod.get(widget.property)
-			))
+			if widget.type == "action":
+				_init_action(mod, widget, cfg.get_value(mod.id, widget.action, ""))
+			else:
+				mod.set(widget.property, cfg.get_value(
+					mod.id, widget.property, mod.get(widget.property)
+				))
 
 
 func _on_SettingsMenu_ready(scene: Control) -> void:
@@ -49,6 +52,12 @@ func _on_SettingsMenu_ready(scene: Control) -> void:
 
 
 func _sort_mods(a: ContentInfo, b: ContentInfo) -> bool:
+	# Sort Mod Utils itself to the top
+	if a.id == "cat_modutils":
+		return true
+	elif b.id == "cat_modutils":
+		return false
+
 	# Sort mods by localized name
 	var a_name: String = Strings.strip_bbcode(tr(a.name))
 	var b_name: String = Strings.strip_bbcode(tr(b.name))
@@ -70,3 +79,45 @@ func _sort_mods(a: ContentInfo, b: ContentInfo) -> bool:
 
 	# ???
 	return false
+
+
+func _init_action(mod: ContentInfo, widget: Dictionary, saved_keys: String) -> void:
+	assert("action" in widget)
+	if not "action" in widget:
+		return
+
+	InputMap.add_action(widget.action)
+
+	# Add gamepad input
+	if "button" in widget:
+		var button := InputEventJoypadButton.new()
+		button.button_index = widget.button
+		button.pressed = true
+		InputMap.action_add_event(widget.action, button)
+
+	# Restore cfg
+	if not saved_keys.empty():
+		var parse_result: JSONParseResult = JSON.parse(saved_keys)
+		if not parse_result.result is Array:
+			push_error("Mod Utils: Corrupt saved keybinds for mod action %s" % widget.action)
+			return
+		var keys: Array = parse_result.result
+		for scancode in keys:
+			var keybind := InputEventKey.new()
+			if "physical" in widget and widget.physical is bool and widget.physical:
+				keybind.physical_scancode = int(scancode)
+			else:
+				keybind.scancode = int(scancode)
+			keybind.pressed = true
+			InputMap.action_add_event(widget.action, keybind)
+		return
+
+	# Default keybind
+	if "scancode" in widget:
+		var keybind := InputEventKey.new()
+		if "physical" in widget and widget.physical is bool and widget.physical:
+			keybind.physical_scancode = widget.scancode
+		else:
+			keybind.scancode = widget.scancode
+		keybind.pressed = true
+		InputMap.action_add_event(widget.action, keybind)

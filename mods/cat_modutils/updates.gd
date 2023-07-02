@@ -1,12 +1,20 @@
-extends Reference
+ extends Reference
 
 
 signal updates_downloaded
 
+var modutils: ContentInfo
 
-func _init() -> void:
+
+func _init(parent: ContentInfo) -> void:
+	modutils = parent
+
 	# Add a callback for when we reach the title screen
 	SceneManager.connect("scene_changed", self, "_on_SceneManager_scene_changed")
+
+	# Don't check for updates if disabled
+	if not modutils.setting_check_updates:
+		return
 
 	# Finish init later
 	assert(not SceneManager.preloader.singleton_setup_complete)
@@ -171,6 +179,10 @@ func _parse_dict_from_http(result: int, response_code: int, _headers: PoolString
 func _on_SceneManager_scene_changed() -> void:
 	# Modify the title screen to show update data
 	if SceneManager.current_scene.filename != "res://menus/title/TitleMenu.tscn":
+		return
+
+	# Don't edit TitleMenu if disabled
+	if not modutils.setting_check_updates:
 		return
 
 	# Abort and leave the title screen alone if no mod update information is available.

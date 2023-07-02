@@ -61,3 +61,5 @@ MODUTILS_TITLE_MOD_UPDATE_WITH_URL1,An update is available for {content_name}.\n
 MODUTILS_TITLE_MOD_UPDATE_WITH_URL2,Open this address in your web browser?\n{content_address}
 MODUTILS_TITLE_MOD_ERROR1,There was an error downloading or parsing update info for {content_name}.
 MODUTILS_TITLE_MOD_ERROR2,"The mod may have updated, or this may be a temporary error.\nThe mod is still loaded and ready to use."
+UI_SETTINGS_CAT_MODUTILS_RANDOMIZE_DOG_BOOTLEG,“Randomize Types” mode affects Barkley
+UI_SETTINGS_CAT_MODUTILS_CHECK_UPDATES,Mod update notifications
