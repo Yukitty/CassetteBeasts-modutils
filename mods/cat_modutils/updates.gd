@@ -133,7 +133,10 @@ func _check_updates(mod: ContentInfo, updates_url: String, update_data: Dictiona
 
 	# An update is available, so mark it.
 #	Console.writeLine("An update is available for %s" % mod.name)
-	if "mod_page" in mod_updates and mod_updates.mod_page is String:
+	var use_mod_page: bool = "mod_page" in mod_updates and mod_updates.mod_page is String
+	if use_mod_page and not mod_updates.mod_page.begins_with("https://") and not mod_updates.mod_page.begins_with("http://"):
+		use_mod_page = false
+	if use_mod_page:
 		mod.set_meta("modutils_update", mod_updates.mod_page)
 	else:
 		mod.set_meta("modutils_update", "")

@@ -24,8 +24,8 @@ func _ready() -> void:
 	remove_child(ErrorButton)
 
 	# Shrink the icons in memory instead of duplicating them in the mod data
-	UpdateButton.icon = _shrink_texture(UpdateButton.icon, ImageTexture.FLAG_FILTER)
-	ErrorButton.icon = _shrink_texture(ErrorButton.icon, ImageTexture.FLAG_FILTER)
+#	UpdateButton.icon = _shrink_texture(UpdateButton.icon)
+	ErrorButton.icon = _shrink_texture(ErrorButton.icon)
 
 	_update_version_table()
 	UserSettings.connect("locale_changed", self, "_update_version_table")
@@ -133,8 +133,9 @@ func _on_Error_pressed(mod: ContentInfo) -> void:
 	yield(GlobalMessageDialog.show_message(Loc.trf("MODUTILS_TITLE_MOD_ERROR2", subs)), "completed")
 
 
-func _shrink_texture(texture: Texture, flags: int = 0) -> Texture:
+func _shrink_texture(texture: Texture, flags: int = ImageTexture.FLAG_FILTER) -> Texture:
 	var image: Image = texture.get_data()
+	assert(image != texture.get_data()) # Make sure we don't need to duplicate
 	image.shrink_x2()
 	var new_texture := ImageTexture.new()
 	new_texture.create_from_image(image, flags)
