@@ -205,7 +205,8 @@ func _init_modclub_chunk_feature(force: bool = false) -> void:
 		return
 	var chunk_metadata: Datatable = Datatables.load(_OVERWORLD_METADATA.chunk_metadata_path)
 	var chunk: MapChunkMetadata = chunk_metadata.table["overworld_3_0"]
-	chunk.features.push_back(preload("world/feature_modclub.tres"))
+	if chunk is MapChunkMetadata:
+		chunk.features.push_back(preload("world/feature_modclub.tres"))
 	_chunk_init = true
 
 

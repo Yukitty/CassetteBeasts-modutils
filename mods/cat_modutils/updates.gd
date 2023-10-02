@@ -180,8 +180,10 @@ func _parse_dict_from_http(result: int, response_code: int, _headers: PoolString
 
 
 func _on_SceneManager_scene_changed() -> void:
+	var scene: Node = SceneManager.current_scene
+
 	# Modify the title screen to show update data
-	if SceneManager.current_scene.filename != "res://menus/title/TitleMenu.tscn":
+	if scene.filename != "res://menus/title/TitleMenu.tscn":
 		return
 
 	# Don't edit TitleMenu if disabled
@@ -198,7 +200,14 @@ func _on_SceneManager_scene_changed() -> void:
 		return
 
 	# Grab scroll container and hide the vanilla label
-	var scroll_container: ScrollContainer = SceneManager.current_scene.get_node("LogoContainer/VBoxContainer/PanelContainer/ScrollContainer")
+	var scroll_container: ScrollContainer
+	if scene.has_node("LogoContainer/VersionContainer"): # Version 1.5 and later
+		scroll_container = scene.get_node("LogoContainer/VersionContainer/PanelContainer/ScrollContainer")
+	elif scene.has_node("LogoContainer/VBoxContainer"): # Support previous versions
+		scroll_container = scene.get_node("LogoContainer/VBoxContainer/PanelContainer/ScrollContainer")
+	if not scroll_container:
+		push_error("ModUtils: Failed to process title scene!")
+		return
 	scroll_container.get_child(0).hide()
 
 	# Add custom list of labels instead

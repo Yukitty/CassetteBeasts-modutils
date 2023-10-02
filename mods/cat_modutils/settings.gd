@@ -81,7 +81,7 @@ func _sort_mods(a: ContentInfo, b: ContentInfo) -> bool:
 	return false
 
 
-func _init_action(mod: ContentInfo, widget: Dictionary, saved_keys: String) -> void:
+func _init_action(_mod: ContentInfo, widget: Dictionary, saved_keys: String) -> void:
 	assert("action" in widget)
 	if not "action" in widget:
 		return
