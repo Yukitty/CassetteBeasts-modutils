@@ -38,8 +38,10 @@ var world: Reference
 var items: Reference
 var updates: Reference
 
-# Modified Resource references
-var _save_state_party: Resource
+# Script-modified Resources MUST remain in some
+# global var, or else the changes will be lost.
+# This includes take_over_path getting reverted.
+var _res_cache: Array = []
 
 
 func _init() -> void:
@@ -60,8 +62,9 @@ func init_content() -> void:
 		TranslationServer.add_translation(translation)
 
 	# Extend SaveState.party (bugfixes)
-	_save_state_party = load("res://mods/cat_modutils/bugfix/Party.gd")
-	_save_state_party.take_over_path("res://global/save_state/Party.gd")
+	var res: Resource = load("res://mods/cat_modutils/bugfix/Party.gd")
+	res.take_over_path("res://global/save_state/Party.gd")
+	_res_cache.push_back(res)
 
 	# Call post_init deferred, to work around init_content oversight in
 	# Cassette Beasts v1.1.2 and earlier
