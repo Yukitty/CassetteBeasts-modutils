@@ -6,6 +6,10 @@ const default_translation_paths = [
 	"res://translation/dialogue_demo.",
 	"res://translation/dialogue_release.",
 	"res://translation/1.1_demo.",
+	"res://translation/1.1_release.",
+	"res://translation/dlc_demo.",
+	"res://translation/dlc_release.",
+	"res://translation/online_release.",
 ]
 
 var translations: Array
