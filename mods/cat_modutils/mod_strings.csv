@@ -13,18 +13,28 @@ MAGIKRAB_MODUTILS_PLATFORMB1,Platform B is closed for maintenance at this statio
 REGION_NAME_MODUTILS,Mod Club Station
 MODUTILS_REDKRAB_NAME,Redkrab
 MODUTILS_MODCLUB_WIP1,Under construction!
-MODUTILS_PASSENGER_NAME,Passenger
-MODUTILS_PASSENGER_1_DIALOGUE1,Oh? Are you travelling the Ver-Line too?
-MODUTILS_PASSENGER_1_DIALOGUE2,"It’s still dirty down here... But with a little work, Mod Club Station could become quite cozy."
-MODUTILS_PASSENGER_1_DIALOGUE3,Phew![pause] I need a break after that last adventure.
-MODUTILS_PASSENGER_1_DIALOGUE4,Have you seen a snack machine around?
-MODUTILS_PASSENGER_1_DIALOGUE5,What happened to Platform C? Have you used it?
+MODUTILS_PASSENGER_NAME,Mod Club Passenger
+MODUTILS_PASSENGER_1_DIALOGUE.v1,Oh? Are you travelling the Ver-Line too?
+MODUTILS_PASSENGER_1_DIALOGUE.v2,"It’s still dirty down here... But with a little work, Mod Club Station could become quite cozy."
+MODUTILS_PASSENGER_1_DIALOGUE.v3,Phew![pause] I need a break after that last adventure.
+MODUTILS_PASSENGER_1_DIALOGUE.v4,Have you seen a snack machine around?
+MODUTILS_PASSENGER_1_DIALOGUE.v5,What happened to Platform C? Have you used it?
+MODUTILS_PASSENGER_1_DIALOGUE.v6,Hmm... Who takes care of the plants here?
+MODUTILS_PASSENGER_1_DIALOGUE.v7,"Oh! Fresh mod updates came in for me, [wave amp=30]yesss![/wave] I can't wait to try them!"
+MODUTILS_PASSENGER_1_DIALOGUE.v8,I'm still waiting for new stops to be added to the Ver-Line. It's been running a little slow as of late.
+MODUTILS_PASSENGER_1_DIALOGUE.v9,"The horse drawn carriage of the Ver-Line is awfully rickety and shakey, but it doesn't feel like it's actually moving? That's odd..."
+MODUTILS_PASSENGER_1_DIALOGUE.v10,"Hey, welcome to the mod club. Have any good adventures you could recommend to me?"
+MODUTILS_PASSENGER_1_DIALOGUE.v11,"My hair was naturally orange, but don't tell anyone I dyed it!"
 MODUTILS_REDKRAB_INTRO1,"Salutations to you, my fellow adventurers! Allow me, the indomitable Redkrab, to serve as your fearless guide to locales unknown!"
 MODUTILS_REDKRAB_INTRO2,"The wonderous Vermillion Line, or “Ver-Line” if you would, has chosen me as Her avatar, so that She may show you to [wave amp=30]glorious adventure[/wave]!"
 MODUTILS_REDKRAB_INTRO3,"Please, friends! You need only speak of the adventure you seek, and I shall shepard you swiftly along through Platform D!"
 MODUTILS_TUTORIAL_PLATFORMD_TITLE,Tutorial: The Ver-Line
-MODUTILS_TUTORIAL_PLATFORMD1,"Talk to Redkrab to access new locations provided by installed mods.\n\nPossible destinations may include a dungeon, a town, or even an entire island."
-MODUTILS_TUTORIAL_PLATFORMD2,You must install additional mods to use this feature.\n\nLook for “Platform D” support on ModWorkshop.
+MODUTILS_TUTORIAL_PLATFORMD1,"Talk to Redkrab to access new locations provided by installed mods.
+
+Possible destinations may include a dungeon, a town, or even an entire island."
+MODUTILS_TUTORIAL_PLATFORMD2,"You must install additional mods to use this feature.
+
+Look for “Platform D” support on ModWorkshop."
 MODUTILS_REDKRAB_MENU,"Speak your mind, adventuring fellows! From whence shall we begin these festivities?"
 MODUTILS_REDKRAB_MENU_OPTION_TRAVEL,I seek adventure!
 MODUTILS_REDKRAB_MENU_OPTION_MODCLUB,Mod Club Station?
@@ -55,11 +65,17 @@ UI_PAUSE_MODUTILS_RETURN_BTN,Return to Mod Club Station
 MODUTILS_REDKRAB_RETURN,My fellows! Have you grown weary of this place? Shall we retire to Mod Club Station?
 MODUTILS_REDKRAB_RETURN_NO1,Adventure here as long as you wish! I shall await your triumphant return with baited breath.
 MODUTILS_ITEM_GLASS_NAME,Glass
-MODUTILS_ITEM_DESCRIPTION_FOOTER,%s\n\n[color=#ab75e8]Provided by Mod Utils for general use.[/color]
-MODUTILS_TITLE_MOD_UPDATE,An update is available for {content_name}.\nPlease check the mod's release page.
-MODUTILS_TITLE_MOD_UPDATE_WITH_URL1,An update is available for {content_name}.\nThe mod has provided a link to its home page.
-MODUTILS_TITLE_MOD_UPDATE_WITH_URL2,Open this address in your web browser?\n{content_address}
+MODUTILS_ITEM_DESCRIPTION_FOOTER,"%s
+
+[color=#ab75e8]Provided by Mod Utils for general use.[/color]"
+MODUTILS_TITLE_MOD_UPDATE,"An update is available for {content_name}.
+Please check the mod's release page."
+MODUTILS_TITLE_MOD_UPDATE_WITH_URL1,"An update is available for {content_name}.
+The mod has provided a link to its home page."
+MODUTILS_TITLE_MOD_UPDATE_WITH_URL2,"Open this address in your web browser?
+{content_address}"
 MODUTILS_TITLE_MOD_ERROR1,There was an error downloading or parsing update info for {content_name}.
-MODUTILS_TITLE_MOD_ERROR2,"The mod may have updated, or this may be a temporary error.\nThe mod is still loaded and ready to use."
+MODUTILS_TITLE_MOD_ERROR2,"The mod may have updated, or this may be a temporary error.
+The mod is still loaded and ready to use."
 UI_SETTINGS_CAT_MODUTILS_RANDOMIZE_DOG_BOOTLEG,“Randomize Types” mode affects Barkley
 UI_SETTINGS_CAT_MODUTILS_CHECK_UPDATES,Mod update notifications

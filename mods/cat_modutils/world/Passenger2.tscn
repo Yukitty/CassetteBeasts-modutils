@@ -17,7 +17,11 @@ character = null
 script = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="3"]
-albedo = Color( 1, 1, 1, 0.333333 )
+render_priority = 1
+scissor_enabled = false
+albedo = Color( 1, 1, 1, 0.333 )
+wave_amplitude = 0.02
+wave_v_frequency = 10.0
 sprite_rotation = Vector3( 0, 0, 0 )
 
 [node name="PlayerDetector" parent="." index="10" instance=ExtResource( 1 )]

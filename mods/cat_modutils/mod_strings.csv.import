@@ -1,16 +1,17 @@
 [remap]
 
-importer="csv_translation"
-type="Translation"
+importer="tccoxon.translation_plus"
+type="Resource"
+path="res://.import/mod_strings.csv-505502579f2dfd61e749c9c9621f5937.res"
 
 [deps]
 
-files=[ "res://mods/cat_modutils/mod_strings.en.translation" ]
-
 source_file="res://mods/cat_modutils/mod_strings.csv"
-dest_files=[ "res://mods/cat_modutils/mod_strings.en.translation" ]
+dest_files=[ "res://.import/mod_strings.csv-505502579f2dfd61e749c9c9621f5937.res" ]
 
 [params]
 
-compress=true
 delimiter=0
+enable_pseudo_localization=false
+pseudo_locale="eo"
+analysis_path="res://mods/cat_modutils/translation_analysis.tres"

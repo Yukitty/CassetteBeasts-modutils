@@ -3,11 +3,6 @@ extends ContentInfo
 # Signals
 signal post_init
 
-# Constants
-const MOD_STRINGS: Array = [
-	preload("mod_strings.en.translation"),
-]
-
 const MODUTILS = {
 	"updates": "https://gist.githubusercontent.com/Yukitty/f113b1e2c11faad763a47ebc0a867643/raw/updates.json",
 	"settings": [
@@ -57,9 +52,11 @@ func _init() -> void:
 
 
 func init_content() -> void:
-	# Add translation strings
-	for translation in MOD_STRINGS:
-		TranslationServer.add_translation(translation)
+	# Merge translation analysis (ugh)
+	var mod_analysis: TranslationAnalysis = load("res://mods/cat_modutils/translation_analysis.tres")
+	assert(Loc.translation_analysis)
+	Loc.translation_analysis.variant_counts.merge(mod_analysis.variant_counts)
+	Loc.translation_analysis.pronouns.merge(mod_analysis.pronouns)
 
 	# Extend SaveState.party (bugfixes)
 	var res: Resource = load("res://mods/cat_modutils/bugfix/Party.gd")

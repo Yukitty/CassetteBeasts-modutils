@@ -5,15 +5,10 @@ onready var bench: Node = $Bench
 onready var shops: Node = $Shops
 
 func _ready() -> void:
-	SceneManager.current_scene.connect("transitioned_into", self, "_populate")
+	call_deferred("_populate")
+
 
 func _populate() -> void:
-	if not is_inside_tree():
-		return
-
-	for node in get_tree().get_nodes_in_group("dynamic_content"):
-		node.queue_free()
-
 	# Get the population
 	var lib: Reference = DLC.mods_by_id.cat_modutils.world
 	var population: Array = lib._modclub_population.duplicate()
@@ -141,7 +136,6 @@ func _spawn_npc(scene: PackedScene, default_state_override: String = "") -> Spat
 				# so we leave the Spatial as the new root
 				node = root
 
-	node.add_to_group("dynamic_content")
 	if not default_state_override.empty() and "default_state_override" in node:
 		node.default_state_override = default_state_override
 	owner.add_child(node)

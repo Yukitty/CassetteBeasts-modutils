@@ -1,0 +1,40 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://mods/cat_modutils/world/scenery/decorative_plants/random_sprite.gd" type="Script" id=1]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/small_basket_1.mesh" type="ArrayMesh" id=2]
+[ext_resource path="res://mods/cat_modutils/world/scenery/warpable_object.gd" type="Script" id=3]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/small_bush_1.png" type="Texture" id=4]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/cherry_blossom.png" type="Texture" id=5]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/pale_orchids.png" type="Texture" id=6]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/red_roses.png" type="Texture" id=7]
+[ext_resource path="res://world/objects/decorative_plants/plant_basket/lavenders.png" type="Texture" id=8]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 1.125, 0.625, 0.75 )
+
+[node name="RandomPlanter" type="StaticBody"]
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0.25 )
+shape = SubResource( 1 )
+
+[node name="small_basket_1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, 0 )
+mesh = ExtResource( 2 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.25 )
+centered = false
+offset = Vector2( -8, 0 )
+pixel_size = 0.125
+billboard = 1
+shaded = true
+double_sided = false
+alpha_cut = 1
+texture = ExtResource( 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_ase_imported": true
+}
+textures = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]

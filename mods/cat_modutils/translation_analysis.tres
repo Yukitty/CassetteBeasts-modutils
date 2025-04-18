@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/translation_plus/TranslationAnalysis.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+variant_counts = {
+"MODUTILS_PASSENGER_1_DIALOGUE": 11
+}
+pronouns = {
+}

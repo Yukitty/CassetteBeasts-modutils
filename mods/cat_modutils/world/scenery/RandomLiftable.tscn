@@ -1,0 +1,18 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://mods/cat_modutils/world/scenery/random_spawn.gd" type="Script" id=1]
+[ext_resource path="res://world/objects/rigid_physics/LiftableBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://world/objects/forces/LiftableMagnet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://world/objects/rigid_physics/LiftableCrate.tscn" type="PackedScene" id=4]
+[ext_resource path="res://world/objects/rigid_physics/LiftableBarrel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://world/objects/rigid_physics/LiftableRock2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://world/objects/rigid_physics/LiftableRock3.tscn" type="PackedScene" id=7]
+[ext_resource path="res://world/objects/rigid_physics/LiftableRock1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://world/objects/static_physics/commune_props/LiftableBucket.tscn" type="PackedScene" id=9]
+
+[node name="RandomLiftable" type="Spatial"]
+script = ExtResource( 1 )
+scenes = [ ExtResource( 4 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 9 ) ]
+
+[node name="SpawnPoint" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )

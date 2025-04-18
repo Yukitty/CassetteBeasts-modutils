@@ -41,7 +41,7 @@ var _magikrab_dest_modclub: PackedScene
 
 
 func _init(modutils: ContentInfo) -> void:
-	# Default NPC population (flavor text)
+	# Default NPC population (flavor text and decoration)
 	# The flags prevent these NPCs from unlocking Mod Club Station by themselves.
 	_modclub_population = [
 		{
@@ -54,6 +54,198 @@ func _init(modutils: ContentInfo) -> void:
 			"scene": "res://mods/cat_modutils/world/Passenger2.tscn",
 			"mode": "standing",
 			"chance": 1/10.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://world/objects/decorative_plants/autumn_leaf_pile/autumn_leaf_pile_1.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://world/objects/decorative_plants/autumn_leaf_pile/autumn_leaf_pile_1.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomDestructible.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomDestructible.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
+			"mode": "standing",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://world/objects/interior_props/PunchingBag.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
+			"flags": ["modutils_modclub_unlocked"],
+		},
+		{
+			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
+			"mode": "shop full",
+			"chance": 1/3.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 	]

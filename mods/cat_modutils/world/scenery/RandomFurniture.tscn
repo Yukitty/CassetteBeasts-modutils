@@ -1,0 +1,18 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://mods/cat_modutils/world/scenery/random_spawn.gd" type="Script" id=1]
+[ext_resource path="res://world/objects/interior_props/SimpleBookcase1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://world/objects/interior_props/Desk.tscn" type="PackedScene" id=3]
+[ext_resource path="res://world/objects/chests/OfficeCabinet1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://world/objects/interior_props/SimpleChair1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://world/objects/interior_props/PunchingBag.tscn" type="PackedScene" id=6]
+[ext_resource path="res://world/objects/interior_props/Wardrobe.tscn" type="PackedScene" id=7]
+[ext_resource path="res://world/objects/chests/Fridge1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://world/objects/static_physics/wooden_torch/wooden_torch_1.tscn" type="PackedScene" id=9]
+
+[node name="RandomFurniture" type="Spatial"]
+script = ExtResource( 1 )
+scenes = [ ExtResource( 3 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ) ]
+
+[node name="SpawnPoint" type="Position3D" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
