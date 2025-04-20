@@ -38,6 +38,7 @@ var _modclub_population: Array
 var _modclub_destinations: Array
 var _magikrab_extra_behaviors: PackedScene
 var _magikrab_dest_modclub: PackedScene
+var _modclub_seed_offset: int
 
 
 func _init(modutils: ContentInfo) -> void:
@@ -59,193 +60,157 @@ func _init(modutils: ContentInfo) -> void:
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
-			"flags": ["modutils_modclub_unlocked"],
-		},
-		{
-			"scene": "res://mods/cat_modutils/world/scenery/decorative_plants/RandomPlanter.tscn",
-			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://world/objects/decorative_plants/autumn_leaf_pile/autumn_leaf_pile_1.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://world/objects/decorative_plants/autumn_leaf_pile/autumn_leaf_pile_1.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/4.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomDestructible.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/6.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomDestructible.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/6.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/2.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/2.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/2.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomLiftable.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/2.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/RandomFurniture.tscn",
 			"mode": "standing",
-			"chance": 1/3.0,
+			"chance": 1/5.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://world/objects/interior_props/PunchingBag.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 		{
 			"scene": "res://mods/cat_modutils/world/scenery/CoffeeTableScene.tscn",
 			"mode": "shop full",
-			"chance": 1/3.0,
+			"chance": 1/8.0,
 			"flags": ["modutils_modclub_unlocked"],
 		},
 	]
@@ -273,8 +238,8 @@ func _init(modutils: ContentInfo) -> void:
 	# I highly recommend your mod do the same, for dungeons.
 	SceneManager.PRESERVABLE_SCENE_BLACKLIST.push_back("res://mods/cat_modutils/")
 
-	# Add "Mod Club Station" to overworld fast travel map if discovered
-	SaveSystem.connect("file_loaded", self, "_init_modclub_chunk_feature")
+	# Add "Mod Club Station" to overworld fast travel map if discovered, load seed, etc.
+	SaveSystem.connect("file_loaded", self, "_on_save_file_loaded")
 
 	# Add "Return to Mod Club Station" button to menu
 	_init_modclub_return_button()
@@ -386,6 +351,12 @@ func is_modclub_populated() -> bool:
 			if SaveState.has_flag(flag):
 				return true
 	return false
+
+
+func _on_save_file_loaded() -> void:
+	_modclub_seed_offset = 0
+	_init_modclub_chunk_feature()
+
 
 # Adds fast travel waypoint to an overworld chunk for Mod Club Station
 func _init_modclub_chunk_feature(force: bool = false) -> void:

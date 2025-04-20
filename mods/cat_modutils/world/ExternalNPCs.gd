@@ -1,5 +1,6 @@
 extends Spatial
 
+onready var lib: Reference = DLC.mods_by_id.cat_modutils.world
 onready var standing: Node = $Standing
 onready var bench: Node = $Bench
 onready var shops: Node = $Shops
@@ -9,10 +10,11 @@ func _ready() -> void:
 
 
 func _populate() -> void:
-	# Get the population
-	var lib: Reference = DLC.mods_by_id.cat_modutils.world
-	var population: Array = lib._modclub_population.duplicate()
+	# Seed the randomizer so predictable club layouts can be replicated.
+	seed(Random.child_seed(SaveState.random_seed ^ (SaveState.world_time.date * 12) ^ (lib._modclub_seed_offset * 3), "cat_modclub"))
 
+	# Get the population
+	var population: Array = lib._modclub_population.duplicate()
 	population.shuffle()
 
 	# Get all the spawn locations
@@ -114,6 +116,11 @@ func _populate() -> void:
 				WarpTarget.warp(shop_spots[0], [node])
 				shop_spots.pop_front()
 
+	# Once we're well-and-truly done generating, reset the random seed for gameplay.
+	yield (Co.next_frame(), "completed")
+	randomize()
+
+
 # Helper for creating temporary NPC nodes
 func _spawn_npc(scene: PackedScene, default_state_override: String = "") -> Spatial:
 	var node: Spatial = scene.instance()
@@ -142,6 +149,7 @@ func _spawn_npc(scene: PackedScene, default_state_override: String = "") -> Spat
 
 	return node
 
+
 func _process_out_conditionals(node: Spatial) -> void:
 	for child in node.get_children():
 		if child is BaseConditionalLayer:
@@ -156,3 +164,11 @@ func _process_out_conditionals(node: Spatial) -> void:
 			child.free()
 		elif child is Spatial:
 			_process_out_conditionals(child)
+
+
+func inc_seed() -> void:
+	lib._modclub_seed_offset += 1
+
+
+func dec_seed():
+	lib._modclub_seed_offset -= 1

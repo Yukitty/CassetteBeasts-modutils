@@ -1,5 +1,6 @@
 extends Node
 
+
 func _ready() -> void:
 	call_deferred("update_sprite")
 
@@ -22,10 +23,10 @@ func update_sprite() -> void:
 	var geo: Sprite3D = sprite.get_node("Sprite3D")
 	geo.cast_shadow = GeometryInstance.SHADOW_CASTING_SETTING_OFF
 
+
 func _on_PlayerDetector_detected(_detection) -> void:
-	yield (Co.next_frame(), "completed")
 	owner.kill()
 
-#func _on_VisibilityNotifier_screen_entered() -> void:
-#	Co.safe_wait(owner, 2.0)
-#	owner.kill()
+
+func _on_Timer_timeout() -> void:
+	owner.kill()

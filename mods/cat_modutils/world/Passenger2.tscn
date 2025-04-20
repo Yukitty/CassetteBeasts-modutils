@@ -32,4 +32,11 @@ require_similar_player_scale = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 shape = SubResource( 1 )
 
-[connection signal="detected" from="PlayerDetector" to="Behavior" method="_on_PlayerDetector_detected" flags=6]
+[node name="Timer" type="Timer" parent="." index="11"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="screen_entered" from="VisibilityNotifier" to="Timer" method="start"]
+[connection signal="screen_exited" from="VisibilityNotifier" to="Timer" method="stop"]
+[connection signal="detected" from="PlayerDetector" to="Behavior" method="_on_PlayerDetector_detected" flags=7]
+[connection signal="timeout" from="Timer" to="Behavior" method="_on_Timer_timeout" flags=6]

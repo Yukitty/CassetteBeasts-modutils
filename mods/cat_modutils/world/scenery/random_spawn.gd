@@ -1,7 +1,7 @@
 extends "res://mods/cat_modutils/world/scenery/warpable_object.gd"
 
 
-export var scenes: Array
+export (Array, PackedScene) var scenes: Array
 
 onready var spawn_point: Spatial = $SpawnPoint
 

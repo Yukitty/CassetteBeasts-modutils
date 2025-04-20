@@ -1,5 +1,17 @@
 extends "res://global/save_state/Party.gd"
 
+func set_snapshot(snap, version: int) -> bool:
+	if not .set_snapshot(snap, version):
+		return false
+
+	# BUGFIX: Remove unknown partner unlocks!
+	# This prevents script errors later, if a mod partner was removed.
+	for id in unlocked_partners:
+		var partner = get_partner_by_id(id)
+		if not partner:
+			unlocked_partners.erase(id)
+	return true
+
 
 func remap_partner_tapes() -> void:
 	var randomize_dog_bootleg: bool = DLC.mods_by_id.cat_modutils.setting_randomize_dog_bootleg

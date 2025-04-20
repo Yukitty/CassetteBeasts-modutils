@@ -2,7 +2,7 @@ extends Sprite3D
 ## Selects a random sprite from an array of textures every time the scene is loaded.
 
 
-export var textures: Array
+export (Array, Texture) var textures: Array
 
 
 func _ready() -> void:

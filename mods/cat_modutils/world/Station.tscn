@@ -510,3 +510,6 @@ direction = "down"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 8, 28 )
 script = ExtResource( 10 )
 direction = "down"
+
+[connection signal="arrived" from="Area2" to="ExternalNPCs" method="dec_seed"]
+[connection signal="arrived" from="Area3" to="ExternalNPCs" method="inc_seed"]
